@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -36,12 +37,23 @@ namespace JDTelecomunicaciones.Controllers
         {
             return View("Promociones");
         }
-        [HttpPost]
-        public IActionResult AñadirPromocion(){
 
-            return RedirectToAction("Promociones");
+        [HttpPost("AsignarPromocion")]
+        public IActionResult AsignarPromocion(string inputIds){
+            //Console.WriteLine(inputIds.Length);
+            //return View("Index");
+            // Deserializa la cadena JSON en un arreglo de enteros
+            int[] ids = JsonSerializer.Deserialize<int[]>(inputIds);
+            for(int i = 0 ; i < ids.Length;i++){
+                Console.WriteLine("Ids"+ids[i]);
+            }
+            // Tu código aquí para trabajar con el arreglo de IDs
+
+            return View("Index");
+
         }
 
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

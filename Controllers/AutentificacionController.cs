@@ -58,17 +58,18 @@ namespace JDTelecomunicaciones.Controllers
                 /*String rolUser = User.FindFirstValue(ClaimTypes.Role);
                 Console.WriteLine(rolUser);*/
 
-                switch(user.rol_usuario){
-                    case 'A': 
-                        return RedirectToAction("Index","Administracion");                  
-                    case 'C':
-                        return RedirectToAction("ServicioTecnico","Cliente");                   
-                    case 'T':
-                        return RedirectToAction("Index","Tecnico");
-                    default:
-                        return RedirectToAction("Error","Home");                        
-                }
+                return user.rol_usuario switch
+                {
+                    'A' => RedirectToAction("Index", "Administracion"),
+                    'C' => RedirectToAction("ServicioTecnico", "Cliente"),
+                    'T' => RedirectToAction("Index", "Tecnico"),
+                    _ => RedirectToAction("Error", "Home"),
+                };
             }
+            else{
+                Console.WriteLine("EL USUARIO SE DEVOLVIO NULL");
+            }
+            
             return View("IniciarSesion");
         }
 

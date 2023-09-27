@@ -1,0 +1,20 @@
+#popUpContainer{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.575);
+    position: fixed;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.sectionContainer{
+    background-color: white;
+    padding: 20px;
+    width: 50%;
+    border-radius: 10px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}

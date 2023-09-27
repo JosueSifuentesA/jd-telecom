@@ -2,4 +2,38 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml"; 
 }
 
-<h1>LISTA DE CLIENTES</h1>
+@section Scripts{
+     <script src="~/js/GestionClientes.js"></script>
+}
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/listaClientes.css" asp-append-version="true" />
+}
+
+<section>
+    <h1>LISTA DE CLIENTES</h1>
+    <form>
+        <input placeholder="Nombre"/>
+        <button type="submit"></button>
+    </form>
+    <form>
+        <div>
+            <a id="btnAsignarDescuento" href="#">Asignar descuento</a>
+            <a id="btnAsignarPromocion" href="#">Asignar promocion</a>
+        </div>
+        <div class="userContainer">
+            <div class="userContainer_user">
+                <label hidden>1</label>
+                <input type="checkbox">
+                <label>Emilia Paucar Chavez</label>
+                <label>75614321</label>
+            </div>
+            <div class="userContainer_user">
+                <label hidden>2</label>
+                <input type="checkbox">
+                <label>Remilia Paucar Chavez</label>
+                <label>75614322</label>
+            </div>
+        </div>
+    </form>
+</section>

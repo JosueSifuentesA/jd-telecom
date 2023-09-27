@@ -78,7 +78,9 @@ namespace JDTelecomunicaciones.Services
             }
             return null;
         }catch(Exception e){
-            Console.WriteLine(e.Message);
+            Console.WriteLine("----------------------------------------");
+            Console.WriteLine("ERROR EN LA CONSULTA : " + e.Message);
+            Console.WriteLine("----------------------------------------");
             return null;
         }
     }

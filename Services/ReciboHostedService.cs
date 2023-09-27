@@ -39,9 +39,9 @@ namespace JDTelecomunicaciones.Services
 
         private async Task GenerarRecibo(object state){
 
-            Console.WriteLine("SE EJECUTO GENERAR RECIBO");
+            //Console.WriteLine("SE EJECUTO GENERAR RECIBO");
             DateTime fechaActual = DateTime.Now;
-            DateTime fechaGeneracionRecibo = new(fechaActual.Year,fechaActual.Month,25);;
+            DateTime fechaGeneracionRecibo = new(fechaActual.Year,fechaActual.Month,30);;
             DateTime fechaVencimiento = new(fechaActual.Year, fechaActual.Month, 30);
             //bool voucherGenerated = false;
             string nombreMes = fechaActual.ToString("MMMM");
