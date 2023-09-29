@@ -29,7 +29,7 @@ namespace JDTelecomunicaciones.Services
         }
     }
     public async Task<List<Usuario>> GetUsers(){
-        var usuarios = await _context.DB_Usuarios.ToListAsync();
+        var usuarios = await _context.DB_Usuarios.Include(p=>p.persona).ToListAsync();
         return usuarios;
     }
 

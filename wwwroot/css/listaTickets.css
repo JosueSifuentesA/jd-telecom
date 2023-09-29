@@ -1,0 +1,58 @@
+.sectionContainer{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+}
+
+.sectionContainer_handler{
+    width: 80%;
+    background-color: white;
+    padding: 20px;
+    height: 85%;
+    border-radius: 20px;
+    overflow: auto;
+}
+
+.sectionContainer_handler form{
+    display: flex;
+}
+
+.ticketHandler{
+    display: flex;
+    width: 100%;
+    flex-flow: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.ticketHandler_ticket{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    background-color: #f3f3f3;
+    padding: 10px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.ticket_DetailButton{
+    display: flex;
+    align-items: center;
+    background-color: white;
+    padding: 5px;
+    border-radius: 50%;
+    border: 2px solid #0061ff;
+}
+
+.ticket_problematica{
+    width: 178px;
+}
+.ticketStatus{
+    display: flex;
+    border-radius: 50%;
+    background: #FF5A5A;
+    /* width: 38px; */
+    padding: 4px;
+}

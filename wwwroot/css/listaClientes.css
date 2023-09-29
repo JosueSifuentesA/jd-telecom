@@ -1,3 +1,77 @@
+.sectionHandler{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.clientSectionContainer{
+    display: flex;
+    flex-flow: column;
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+    width: 80%;
+    height: 90%;
+    align-self: center;
+    gap: 20px;
+}
+
+.opcionHandler{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.clientSectionContainer h1{
+    color: #0061FF;
+    font-size: 32px;
+}
+
+.searchForm{
+    display: inline-flex;
+    width: fit-content;
+}
+
+.searchForm input{
+    border-radius: 5px 0px 0px 5px;
+    border: 2px solid #0061FF;
+    border-style: solid;
+    padding: 5px 10px;
+}
+
+
+.searchForm button{
+    background-color: #0061FF;
+    border: none;
+    display: flex;
+    border-radius: 0px 5px 5px 0px;
+    align-items: center;
+}
+
+.clientSectionContainer a{
+    text-decoration: none;
+    color: inherit;
+    background-color: white;
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: 2px solid #0061FF;
+}
+
+.buttonHandler{
+    display: flex;
+    gap: 10px;
+}
+
+.userContainer_user{
+    background-color: #F3F3F3;
+    PADDING: 10PX;
+    BORDER-RADIUS: 10PX;
+    display: flex;
+    justify-content: space-between;
+}
+
+
 #popUpContainer{
     width: 100vw;
     height: 100vh;
@@ -9,6 +83,23 @@
     justify-content: center;
 }
 
+#cerrarPopup{
+    position: relative;
+    align-self: flex-end;
+}
+
+.userContainer_user img{
+    width: 30px;
+    height: 30px;
+}
+.userContainer_user label{
+    width: 150px;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+    max-width: 200px;
+    overflow: hidden;
+}
+
 .sectionContainer{
     background-color: white;
     padding: 20px;
@@ -17,4 +108,40 @@
     display: flex;
     flex-flow: column;
     align-items: center;
+    gap: 10px;
+}
+
+.sectionContainer h1{
+    color: #0061FF;
+}
+
+.usuarioSeleccionado{
+    background-color: #F3F3F3;
+    PADDING: 10PX;
+    BORDER-RADIUS: 10PX;
+    display: flex;
+    justify-content: space-between;
+}
+
+#formAccion{
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    gap: 40px;
+}
+
+#usuariosSeleccionadosContainer{
+    display: flex;
+    flex-flow: column;
+    gap: 10px;
+    width: 100%;
+}
+
+#accionAdministrativa2{
+    background-color: #0061FF;
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+    border: none;
+    font-weight: 600;
 }

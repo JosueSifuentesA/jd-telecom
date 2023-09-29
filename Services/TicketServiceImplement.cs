@@ -21,7 +21,7 @@ namespace JDTelecomunicaciones.Services
     }
 
     public async Task<List<Tickets>> GetTicketsById(int id){
-        var tickets = await _context.DB_Tickets.Where(t=>t.usuario.id_usuario == id).ToListAsync();
+        var tickets = await _context.DB_Tickets.Include(t=>t.usuario).Where(t=>t.id_ticket == id).ToListAsync();
         return tickets;
     }
 

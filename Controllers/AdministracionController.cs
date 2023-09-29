@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using JDTelecomunicaciones.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -13,10 +14,12 @@ namespace JDTelecomunicaciones.Controllers
     public class AdministracionController : Controller
     {
         private readonly ILogger<AdministracionController> _logger;
+        private readonly UsuarioServiceImplement _usuarioService;
 
-        public AdministracionController(ILogger<AdministracionController> logger)
+        public AdministracionController(ILogger<AdministracionController> logger,UsuarioServiceImplement usuarioService)
         {
             _logger = logger;
+            _usuarioService = usuarioService;
         }
 
         [HttpGet("Index")]
@@ -27,9 +30,10 @@ namespace JDTelecomunicaciones.Controllers
         }
 
         [HttpGet("ListaClientes")]
-        public IActionResult ListaClientes()
+        public async Task<IActionResult> ListaClientes()
         {
-            return View("ListaClientes");
+            var users = await _usuarioService.GetUsers();
+            return View("ListaClientes",users);
         }
 
         [HttpGet("Promociones")]

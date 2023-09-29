@@ -35,6 +35,7 @@ $(document).ready(function() {
         // Aquí comienza la adaptación para crear los enlaces <a>
         var enlace = $('#accionAdministrativa'); // Creamos un elemento <a>
         var form = $('#formAccion')
+        var btnAccionAdministrativa = $('#accionAdministrativa2')
 
         // Verificamos la acción y configuramos los atributos asp-action y asp-controller adecuados
         if (accion === 'btnAsignarDescuento') {
@@ -42,12 +43,14 @@ $(document).ready(function() {
                 "href", "/Administracion/AsignarPromocion"  
             ).text('Asignar Descuento');
             form.attr('action', 'AsignarPromocion');
+            btnAccionAdministrativa.text('Asignar Descuento')
             
         } else if (accion === 'btnAsignarPromocion') {
             enlace.attr(
                 "href", "/Administracion/AsignarPromocion"  
             ).text('Asignar Promoción');
             form.attr('action', 'AsignarPromocion');
+            btnAccionAdministrativa.text('Asignar Promocion')
             
         }
 
@@ -70,11 +73,12 @@ $(document).ready(function() {
             var usuarioDiv = $('<div>').addClass('usuarioSeleccionado');
 
 
-            var inputId = $('<input>').attr('name', 'id').val(usuario.id);
+            
+            //var inputId = $('<input>').attr('name', 'id').val(usuario.id);
             var labelNombre = $('<label>').text(usuario.nombre);
             var labelDNI = $('<label>').text(usuario.dni);
 
-            usuarioDiv.append(inputId);
+            //usuarioDiv.append(inputId);
             usuarioDiv.append(labelNombre);
             usuarioDiv.append(labelDNI);
             // Agrega los datos del usuario al nuevo div

@@ -1,5 +1,9 @@
+@model List<JDTelecomunicaciones.Models.Usuario>
+
 @{
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml"; 
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    Console.WriteLine(Model.Count());
+    var usuarios = Model.ToList(); 
 }
 
 @section Scripts{
@@ -10,30 +14,37 @@
     <link rel="stylesheet" href="~/css/listaClientes.css" asp-append-version="true" />
 }
 
-<section>
-    <h1>LISTA DE CLIENTES</h1>
-    <form>
-        <input placeholder="Nombre"/>
-        <button type="submit"></button>
-    </form>
-    <form>
-        <div>
-            <a id="btnAsignarDescuento" href="#">Asignar descuento</a>
-            <a id="btnAsignarPromocion" href="#">Asignar promocion</a>
-        </div>
-        <div class="userContainer">
-            <div class="userContainer_user">
-                <label hidden>1</label>
-                <input type="checkbox">
-                <label>Emilia Paucar Chavez</label>
-                <label>75614321</label>
-            </div>
-            <div class="userContainer_user">
-                <label hidden>2</label>
-                <input type="checkbox">
-                <label>Remilia Paucar Chavez</label>
-                <label>75614322</label>
+<section class="sectionHandler">
+    <section class="clientSectionContainer">
+        <h1>LISTA DE CLIENTES</h1>
+        <div class="opcionHandler">
+            <form class="searchForm">
+                <input placeholder="Nombre"/>
+                <button type="submit"><img src="~/img/SearchIcon.svg"/></button>
+            </form>
+            <div class="buttonHandler">
+                <a id="btnAsignarDescuento" href="#">Asignar descuento</a>
+                <a id="btnAsignarPromocion" href="#">Asignar promocion</a>
             </div>
         </div>
-    </form>
+        <form>
+            @foreach(var usuario in usuarios){
+
+                <div class="userContainer">
+                    <div class="userContainer_user">
+                        <label hidden>@usuario.id_usuario</label>
+                        <input type="checkbox">
+                        <label>@usuario.persona.nombrePersona @usuario.persona.apPatPersona @usuario.persona.apMatPersona</label>
+                        <label>@usuario.persona.dniPersona</label>
+                        @if(usuario.persona.sexoPersona == 'M'){
+                            <img src="~/img/SexIconH.svg"/>
+                        }else{
+                            <img src="~/img/SexIconM.svg"/>
+                        }
+                    </div>
+                </div>
+
+            }
+        </form>
+    </section>
 </section>
