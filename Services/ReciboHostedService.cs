@@ -50,7 +50,7 @@ namespace JDTelecomunicaciones.Services
                 voucherGenerated = false;
             }
             
-            if(fechaActual >= fechaGeneracionRecibo && voucherGenerated == false){
+            if(fechaActual == fechaGeneracionRecibo && voucherGenerated == false){
                 using (var scope = _serviceProvider.CreateScope()){
                     var _reciboService = scope.ServiceProvider.GetRequiredService<ReciboServiceImplement>();
                     var _usuarioService = scope.ServiceProvider.GetRequiredService<UsuarioServiceImplement>();

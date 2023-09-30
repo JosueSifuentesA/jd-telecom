@@ -1,0 +1,53 @@
+@model JDTelecomunicaciones.Models.Tickets;
+@{
+    Layout = "~/Views/Shared/_LayoutTecnico.cshtml";
+    var ticket = Model;
+    var usuario = Model.usuario;
+    var persona = Model.usuario.persona;
+}
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/servicioTecnico.css" asp-append-version="true" />
+}
+
+
+<section class="TechServiceSection">
+        <div class="contenedorServ"> 
+            <div class="card grande">
+            <h1>DETALLE DE TICKET</h1>
+            <form method="post" asp-action="EnviarTicket" asp-controller="Cliente">
+                    
+                
+                <h1>Informacion del ticket -> JDT-@ticket.id_ticket</h1>
+                <div class="form-container">
+                    <div class="form-group">
+                        <label>Nombres <span style="color: red;">(solo lectura)</span></label>
+                        <input value="@persona.nombrePersona" readonly/>
+                    </div>
+                    <div class="form-group">
+                        <label>Apellidos  <span style="color: red;">(solo lectura)</span></label>
+                        <input value="@persona.apPatPersona @persona.apMatPersona" readonly/>
+                    </div>
+                </div>
+                <div>
+                    <div> 
+                        <label>Problema  <span style="color: red;">(solo lectura)</span></label>      
+                    </div>
+                    <input value="@ticket.tipoProblematica_ticket"/>
+                </div>
+                
+                <div>
+                    <label>Comentarios  <span style="color: red;">(solo lectura)</span></label>
+                    <span></span>
+                    @if(ticket.descripcion_ticket != null){
+                        <textarea name="descripcion"readonly>@ticket.descripcion_ticket</textarea>
+                    }else{
+                        <textarea name="descripcion"readonly></textarea>
+                    }
+                </div>
+            </form>
+            </div>
+        </div>
+        
+      
+    </section>

@@ -37,6 +37,33 @@ namespace JDTelecomunicaciones.Controllers
             
         }
 
+        [HttpGet("TareasHechas")]
+        public async Task<IActionResult> TareasHechas(){
+
+            var ticketsTerminados = await _ticketService.GetSuccesfulTickets();
+
+            return View("TareasHechas",ticketsTerminados);
+        }
+
+        [HttpGet("InformacionTicket")]
+        public async Task<IActionResult> InformacionTicket(int idTicket){
+
+            var ticket = await _ticketService.GetTicketById(idTicket);
+            ticket.status_ticket = "VISTO";
+            await _ticketService.EditTicket(idTicket,ticket);
+            Console.WriteLine("SE ABRIO TICKETS" + ticket.status_ticket);
+            return View("InformacionTicket",ticket);
+        }
+
+        [HttpGet("MarcarTarea")]
+        public async Task<IActionResult> MarcarTarea(int idTicket){
+
+            var ticket = await _ticketService.GetTicketById(idTicket);
+            ticket.status_ticket ="REALIZADO" ;
+            await _ticketService.EditTicket(idTicket,ticket);
+            return RedirectToAction("TareasHechas");
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

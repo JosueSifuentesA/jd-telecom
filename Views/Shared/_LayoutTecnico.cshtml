@@ -40,17 +40,13 @@
       </div>
       <div class="movileNavBar">
         <div class="movileNavBar_optionsHandler">
-          <a asp-controller="Administracion" asp-action="Index" class="optionsHandler_optionsMobile">
+          <a asp-controller="Tecnico" asp-action="Index" class="optionsHandler_optionsMobile">
             <img src="~/img/HomeIconBlue.svg"/>
-            <label>Inicio</label>
+            <label>Centro de Tickets</label>
           </a>
-          <a asp-controller="Administracion" asp-action="ListaClientes"  class="optionsHandler_optionsMobile">
+          <a asp-controller="Tecnico" asp-action="TareasHechas"  class="optionsHandler_optionsMobile">
             <img src="~/img/ServiciosIconBlue.svg"/>
-            <label>Mis Planes</label>
-          </a>
-          <a asp-controller="Administracion" asp-action="Promociones" class="optionsHandler_optionsMobile">
-            <img src="~/img/TransactionsIconBlue.svg"/>
-            <label>Transacciones</label>
+            <label>Tareas hechas</label>
           </a>
         </div>
       </div>
@@ -61,17 +57,13 @@
   <main role="main">
     <section class="SideBarSection">
       <div class="SideBarSection_optionsHandler">
-        <a asp-controller="Administracion" asp-action="Index" class="optionsHandler_option">
+        <a asp-controller="Tecnico" asp-action="Index" class="optionsHandler_option">
           <img src="~/img/HomeIcon.svg"/>
-          <label>Inicio</label>
+          <label>Centro de Tickets</label>
         </a>
-        <a asp-controller="Administracion" asp-action="ListaClientes"  class="optionsHandler_option">
+        <a asp-controller="Tecnico" asp-action="TareasHechas"  class="optionsHandler_option">
           <img src="~/img/ServiciosIcon.svg"/>
-          <label>Clientes</label>
-        </a>
-        <a asp-controller="Administracion" asp-action="Promociones" class="optionsHandler_option">
-          <img src="~/img/TransactionsIcon.svg"/>
-          <label>Manejo de Promociones</label>
+          <label>Tareas hechas</label>
         </a>
       </div>
     </section>

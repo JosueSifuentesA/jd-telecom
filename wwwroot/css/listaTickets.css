@@ -56,3 +56,11 @@
     /* width: 38px; */
     padding: 4px;
 }
+
+.ticket_taskCompleted{
+    background-color: gray;
+    padding: 5px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+}

@@ -15,7 +15,7 @@ namespace JDTelecomunicaciones.Models
         [Key]
         public int id_ticket {get;set;}
         public string tipoProblematica_ticket {get;set;}
-        public string descripcion_ticket {get;set;}
+        public string? descripcion_ticket {get;set;}
         public string status_ticket {get;set;}
         public string fecha_ticket {get;set;}
          
