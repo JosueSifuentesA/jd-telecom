@@ -33,7 +33,6 @@ namespace JDTelecomunicaciones.Controllers
             int intTicketId = int.Parse(ticketId);
 
             var ticket = await _ticketService.GetTicketsById(intTicketId);
-            Console.WriteLine(ticket.Count());
             return View("Index",ticket);
             
         }

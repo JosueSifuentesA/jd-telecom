@@ -46,7 +46,7 @@ namespace JDTelecomunicaciones.Controllers
             int idUser = int.Parse(idUserClaim);
 
             var miUsuario = await _usuarioService.FindUserById(idUser);
-            var tickets = await _ticketService.GetTicketsById(idUser);
+            var tickets = await _ticketService.GetTicketsByUserId(idUser);
 
             Console.WriteLine(miUsuario.persona + " <-- AQUI HAY UNA PERSONA ");
 
