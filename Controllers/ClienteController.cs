@@ -22,21 +22,20 @@ namespace JDTelecomunicaciones.Controllers
         private readonly UsuarioServiceImplement _usuarioService;
         private readonly ReciboServiceImplement _reciboService;
         private readonly ApplicationDbContext _context;
+
+        private readonly MercadoPagoServiceImplement _mercadoPagoService;
         private Timer _timer;
 
 
-        public ClienteController(TicketServiceImplement ticketService,UsuarioServiceImplement usuarioService,ReciboServiceImplement reciboService,ApplicationDbContext context)
+        public ClienteController(TicketServiceImplement ticketService,UsuarioServiceImplement usuarioService,ReciboServiceImplement reciboService,ApplicationDbContext context , MercadoPagoServiceImplement mercadoPagoService)
         {
             _ticketService = ticketService;
             _usuarioService = usuarioService;
             _reciboService = reciboService;
             
+            _mercadoPagoService = mercadoPagoService;
+
             _context = context;
-        }
-        [Authorize(Roles ="C")]
-        public IActionResult Index()
-        {
-            return View();
         }
         [Authorize(Roles ="C")]
         [HttpGet("ServicioTecnico")]
@@ -110,6 +109,37 @@ namespace JDTelecomunicaciones.Controllers
             return View("Error");
         }
 
+        [Authorize(Roles ="C")]
+        [HttpGet("Index")]
+        public async Task<IActionResult> Index()
+        {
+            return View("Index");
+        }
+
+        [HttpPost("/process_payment")]
+        public async Task<IActionResult> process_payment(){
+            using (var reader = new StreamReader(Request.Body))
+            {
+                var requestBody = await reader.ReadToEndAsync();
+
+                dynamic requestData = Newtonsoft.Json.JsonConvert.DeserializeObject(requestBody);
+
+                var token = requestData.token;
+                var issuerId = requestData.issuer_id;
+                var paymentMethodId = requestData.payment_method_id;
+                var transactionAmount = requestData.transaction_amount;
+                var installments = requestData.installments;
+                var email = requestData.email;
+                var type = requestData.type;
+                var number = requestData.number;
+                string descripcion = "TESTPRUEBADESCRIPCION";
+                //var customerName = requestData.
+
+                Console.WriteLine(requestBody);
+                _mercadoPagoService.CrearPago(requestData,descripcion);
+            }
+            return Ok(); 
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

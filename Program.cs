@@ -27,6 +27,7 @@ builder.Services.AddScoped<TicketServiceImplement>();
 builder.Services.AddScoped<ServicesFactory>();
 builder.Services.AddScoped<UsuarioServiceImplement>();
 builder.Services.AddScoped<PromocionServiceImplement>();
+builder.Services.AddScoped<MercadoPagoServiceImplement>();
 builder.Services.AddScoped<ReciboServiceImplement>();
 builder.Services.AddHostedService<ReciboHostedService>();
 //builder.Services.AddScoped<PersonaServiceImplement>();
