@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 using Sprache;
 
 namespace JDTelecomunicaciones.Controllers
@@ -41,13 +42,11 @@ namespace JDTelecomunicaciones.Controllers
         [HttpGet("ServicioTecnico")]
         public async Task<IActionResult> ServicioTecnico()
         {
-            var idUserClaim = User.FindFirst("idUser").Value;
+            var idUserClaim =  User.FindFirst("idUser").Value;
             int idUser = int.Parse(idUserClaim);
 
             var miUsuario = await _usuarioService.FindUserById(idUser);
             var tickets = await _ticketService.GetTicketsByUserId(idUser);
-
-            Console.WriteLine(miUsuario.persona + " <-- AQUI HAY UNA PERSONA ");
 
             var modeloConListas = new ModeloConListas<Usuario,Tickets>(miUsuario,tickets);
 
@@ -113,9 +112,38 @@ namespace JDTelecomunicaciones.Controllers
         [HttpGet("Index")]
         public async Task<IActionResult> Index()
         {
-            return View("Index");
+            var idUserClaim = User.FindFirst("idUser").Value;
+            if(idUserClaim != null){
+                int idUser = int.Parse(idUserClaim);
+                var recibosPendientes = await _reciboService.GetAllPendingVouchers(idUser);
+                return View("Index",recibosPendientes);
+
+            }else{
+                return View("Error");
+            }
         }
 
+        [Authorize(Roles ="C")]
+        [HttpGet("/PagoExitoso")]
+        public IActionResult PagoExitoso(){
+            Console.WriteLine("ESTAMOS EN LA FUNCION PAGO EXITOSO");
+            return View("PagoExitoso");
+        }
+
+        [Authorize(Roles ="C")]
+        [HttpGet("/PagoFallido")]
+        public IActionResult PagoFallido(){
+            return View("PagoFallido");
+        }
+
+        [Authorize(Roles ="C")]
+        [HttpGet("/PagoEnProceso")]
+        public IActionResult PagoEnProceso(){
+            return View("PagoEnProceso");
+        }
+
+
+        [Authorize(Roles ="C")] //Añadido recientemente
         [HttpPost("/process_payment")]
         public async Task<IActionResult> process_payment(){
             using (var reader = new StreamReader(Request.Body))
@@ -133,12 +161,33 @@ namespace JDTelecomunicaciones.Controllers
                 var type = requestData.type;
                 var number = requestData.number;
                 string descripcion = "TESTPRUEBADESCRIPCION";
-                //var customerName = requestData.
 
                 Console.WriteLine(requestBody);
-                _mercadoPagoService.CrearPago(requestData,descripcion);
+                var paymentStatus = await _mercadoPagoService.CrearPago(requestData, descripcion);
+                Console.WriteLine(paymentStatus);
+
+                return Json(paymentStatus);
+                //return RedirectToAction("ServicioTecnico");
             }
-            return Ok(); 
+             
+        }
+
+        [Authorize(Roles ="C")] //Añadido recientemente
+        [HttpPost("/pagar_recibos")]
+        public async Task<IActionResult> pagar_recibos(dynamic transaccion , int[] recibos){
+            using (var reader = new StreamReader(Request.Body))
+            {
+                var requestBody = await reader.ReadToEndAsync();
+                dynamic requestData = Newtonsoft.Json.JsonConvert.DeserializeObject(requestBody);
+                JArray voucherIdArray = (JArray)requestData["voucherId"];
+
+                foreach(var item in voucherIdArray){
+                    await _reciboService.PayVoucher(Convert.ToInt32(item));
+                }
+
+                Console.WriteLine($"{voucherIdArray} - {requestData.data.transactionAmount}");
+                return Ok();
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -15,7 +15,7 @@ namespace JDTelecomunicaciones.Services
     public class MercadoPagoServiceImplement
     {
 
-         public async Task CrearPago(dynamic responseData,string descripcion){
+         public async Task<object> CrearPago(dynamic responseData,string descripcion){
 
             try{
 
@@ -45,16 +45,20 @@ namespace JDTelecomunicaciones.Services
                         },
                         FirstName = responseData.payer.FirstName
                     },
-                    IssuerId = responseData.issuer_id
+                    IssuerId = responseData.issuer_id,
+                    //NotificationUrl = responseData.issuer_id ,
+                    CallbackUrl = "www.google.com"
                 };
 
 
                 var client = new PaymentClient();
                 Payment payment = await client.CreateAsync(paymentRequest);
-                Console.WriteLine($"{payment.Status} - {payment.StatusDetail}");
+                Console.WriteLine($"{payment.CallbackUrl} - {payment.StatusDetail}");
+                return payment;
 
             }catch(Exception e){
                 Console.WriteLine($"ERROR:{e.HResult} - {e.Message}");
+                return "error";
             }
         }
 

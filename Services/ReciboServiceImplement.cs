@@ -20,6 +20,16 @@ namespace JDTelecomunicaciones.Services
             _context = context;
         }
 
+        public async Task PayVoucher(int id){
+            try{
+                var recibo = await _context.DB_Recibos.FindAsync(id);
+                recibo.estado_recibo = "PAGADO";
+                await _context.SaveChangesAsync();
+            }catch(Exception e){
+                Console.WriteLine($"{e.Message}- {e.HResult}");
+            }
+        }
+
         public async Task AddVoucher(Recibos recibo)
         {
             try{
