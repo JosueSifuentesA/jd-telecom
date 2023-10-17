@@ -1,1 +1,26 @@
-<h1>PagoFallido</h1>
+@{
+    Layout = "~/Views/Shared/_LayoutNotificaciones.cshtml"; 
+}
+
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/NotificacionFallida.css" asp-append-version="true"/>
+}
+
+<section class="PaymentSection">
+    <div class="PaymentSection_headerContainer">
+        <div class="headerContainer_iconHandler">
+            <img src="~/img/PaymentRejected.svg" alt="CheckSVG"/>
+        </div>
+        <div class="PaymentSection_Tittle">
+            <h1>Pago Fallido</h1>
+            <span>Status de Pago: @ViewBag.StatusPago</span>
+        </div>
+    </div>
+    <div class="PaymentSection_InfoContainer">
+        <div class="InfoContainer_info">
+            <p>Mensaje de Estado: @ViewBag.StatusMsg</p>
+            <a asp-controller="Cliente" asp-action="Index">Aceptar</a>
+        </div>
+    </div>
+</section>

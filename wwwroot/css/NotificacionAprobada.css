@@ -1,0 +1,80 @@
+main{
+    display:flex;
+    justify-content:  center;
+
+}
+
+.PaymentSection{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    width: 80%;
+    max-width: 800px;
+
+    margin-top: 40px;
+    height: max-content;
+}
+
+.info_text{
+    padding: 10px;
+    display: flex;
+    flex-flow: column;
+    gap: 5px;
+
+}
+
+.PaymentSection_Tittle{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+
+.PaymentSection_headerContainer{
+    background-color: rgb(1, 184, 1);
+    width: 100%;
+    padding: 20px;
+    border-radius: 10px 10px 0px 0px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.headerContainer_iconHandler{
+    width: 50px;
+    display: flex;
+    border: 4px solid white;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.headerContainer_iconHandler img{
+    width: 100%;
+}
+
+.PaymentSection_InfoContainer{
+    width: 100%;
+    background-color: #F3F3F3;
+    padding: 20px;
+    border-radius: 0px 0px 10px 10px;
+}
+
+.InfoContainer_info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+
+.InfoContainer_info a{
+    text-decoration: none;
+    color: white;
+    text-align: center;
+    width: 100%;
+    background-color: rgb(1, 184, 1);
+    padding: 10px;
+    border-radius: 10px;
+}

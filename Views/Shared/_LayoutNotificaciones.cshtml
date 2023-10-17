@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="description"
+    content="JD Telecomunicaciones: Te brindamos el mejor servicio de Internet + Cable por FIBRA ÓPTICA, estamos en Cieneguilla y Manchay. Disfruta de INTERNET ILIMITADO." />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Internet por Fibra Óptica | JD Telecomunicaciones</title>
+  <link rel="stylesheet" href="~/css/layoutCliente.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link href="./img/jd-logo-azul.png" rel="icon" type="image/png" />
+  @await RenderSectionAsync("Styles", required: false)
+</head>
+
+<body>
+  <header>
+    <nav id="navbar" class="navbar">
+      <div class="navbar_options" id="navbarNav">
+        <a class="BrandLogo"><img src="~/img/jd-logo-azul.png"/></a>
+        <ul class="navbar-nav">
+          @if(User.Identity.IsAuthenticated){
+            <li class="nav-item">
+            <a class="enlace" asp-controller="Autentificacion" asp-action="Logout">Cerrar sesion</a>
+          </li>
+          }else{
+            <li class="nav-item">
+              <a class="enlace" asp-controller="Home" asp-action="Index">Inicio</a>
+            </li>
+          }
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+
+  <main role="main">
+    @RenderBody()
+  </main>
+  <footer>¡ACCEDE A NUESTROS MEJORES PLANES!</footer>
+  <script src="~/lib/jquery/dist/jquery.min.js"></script>
+  <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="~/js/site.js" asp-append-version="true"></script>
+  <script src="~/js/index.js"></script>
+  @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

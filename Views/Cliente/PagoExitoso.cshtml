@@ -1,1 +1,30 @@
-<h1>PAGO EXITOSO</h1>
+@{
+    Layout = "~/Views/Shared/_LayoutNotificaciones.cshtml"; 
+}
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/NotificacionAprobada.css" asp-append-version="true"/>
+}
+
+<section class="PaymentSection">
+    <div class="PaymentSection_headerContainer">
+        <div class="headerContainer_iconHandler">
+            <img src="~/img/PaymentAproved.svg" alt="CheckSVG"/>
+        </div>
+        <div class="PaymentSection_Tittle">
+            <h1>¡Listo Se acredito tu pago!</h1>
+            <span>Operacion: @ViewBag.PaymentId</span>
+        </div>
+    </div>
+    <div class="PaymentSection_InfoContainer">
+        <div class="InfoContainer_info">
+            <div class="info_text">
+                <label>Monto pagado: S/@ViewBag.PaymentAmount</label>
+                <p>Status de Pago: @ViewBag.StatusPago</p>
+                <p>Mensaje de Estado: @ViewBag.StatusMsg</p>
+                <p>Fecha de la transaccion: @ViewBag.PaymentDate</p>
+            </div>
+            <a asp-controller="Cliente" asp-action="Index">Aceptar</a>
+        </div>
+    </div>
+</section>

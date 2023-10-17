@@ -87,7 +87,8 @@ namespace JDTelecomunicaciones.Services
 
         public async  Task GenerarRecibo(object state){
             Console.WriteLine("Se ejecuto generar recibo");
-            DateTime fechaActual = DateTime.Today;
+            //DateTime fechaActual = DateTime.Today;
+            DateTime fechaActual = new DateTime(2023, 11, 1);
             DateTime fechaGeneracionRecibo = new DateTime(fechaActual.Year, fechaActual.Month, 1);
             DateTime fechaVencimiento = fechaGeneracionRecibo.AddMonths(1).AddDays(-1);
             string nombreMes = fechaActual.ToString("MMMM");

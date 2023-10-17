@@ -125,14 +125,30 @@ namespace JDTelecomunicaciones.Controllers
 
         [Authorize(Roles ="C")]
         [HttpGet("/PagoExitoso")]
-        public IActionResult PagoExitoso(){
-            Console.WriteLine("ESTAMOS EN LA FUNCION PAGO EXITOSO");
+        public IActionResult PagoExitoso([FromQuery] string statusPago, [FromQuery] string statusMsg,[FromQuery] string data){
+
+            dynamic paymentObject = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
+            Console.WriteLine($"{paymentObject.paymentId} - {paymentObject.paymentDate} - {paymentObject.paymentAmount} - {paymentObject.paymentCardLastFour}");
+            ViewBag.StatusPago = statusPago;
+            ViewBag.StatusMsg = statusMsg;
+
+            ViewBag.PaymentId = paymentObject.paymentId;
+            ViewBag.PaymentDate = paymentObject.paymentDate;
+            ViewBag.PaymentAmount = paymentObject.paymentAmount;
+
             return View("PagoExitoso");
         }
 
         [Authorize(Roles ="C")]
         [HttpGet("/PagoFallido")]
-        public IActionResult PagoFallido(){
+        public IActionResult PagoFallido([FromQuery] string statusPago, [FromQuery] string statusMsg,[FromQuery] string data){
+            //var paymentInfo = System.Net.WebUtility.UrlDecode(data);
+            
+            dynamic paymentObject = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
+            Console.WriteLine(paymentObject.paymentAmount);
+            Console.WriteLine(data);
+            ViewBag.StatusMsg = statusMsg;
+
             return View("PagoFallido");
         }
 
@@ -143,7 +159,7 @@ namespace JDTelecomunicaciones.Controllers
         }
 
 
-        [Authorize(Roles ="C")] //Añadido recientemente
+        [Authorize(Roles ="C")] 
         [HttpPost("/process_payment")]
         public async Task<IActionResult> process_payment(){
             using (var reader = new StreamReader(Request.Body))
@@ -167,7 +183,6 @@ namespace JDTelecomunicaciones.Controllers
                 Console.WriteLine(paymentStatus);
 
                 return Json(paymentStatus);
-                //return RedirectToAction("ServicioTecnico");
             }
              
         }
@@ -178,11 +193,12 @@ namespace JDTelecomunicaciones.Controllers
             using (var reader = new StreamReader(Request.Body))
             {
                 var requestBody = await reader.ReadToEndAsync();
+                Console.WriteLine(requestBody);
                 dynamic requestData = Newtonsoft.Json.JsonConvert.DeserializeObject(requestBody);
                 JArray voucherIdArray = (JArray)requestData["voucherId"];
 
-                foreach(var item in voucherIdArray){
-                    await _reciboService.PayVoucher(Convert.ToInt32(item));
+                foreach(var item in voucherIdArray){ 
+                    await _reciboService.PayVoucher(Convert.ToInt32(item));    
                 }
 
                 Console.WriteLine($"{voucherIdArray} - {requestData.data.transactionAmount}");

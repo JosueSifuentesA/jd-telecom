@@ -1,0 +1,84 @@
+
+:root{
+    --mainColor: #0061FF;  
+}
+.mainSection{
+    width: 100%;
+}
+
+
+.mainSection_paymentSection{
+    background-color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+    border-radius: 20px;
+    border: 3px solid var(--mainColor);
+}
+
+
+.paymentSection_statusSection{
+    display: flex;
+    flex-flow: column;
+}
+
+.voucherForm{
+    display: flex;
+    flex-flow: column;
+}
+
+.voucherForm_ammountContainer{
+    color: var(--mainColor);
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.voucherHandler{
+    margin-top: 15px;
+    box-shadow: 3px 4px 2px #b1b1b1;
+}
+
+.voucherHandler_voucher{
+    background-color: #f3f3f3;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--mainColor);
+}
+
+.voucherHandler_options{
+    margin: 10px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+#btnVerRecibo{
+    background-color: transparent;
+    text-align: center;
+    border-radius: 20px;
+    border: 1px solid var(--mainColor);
+    color: black;
+    font-weight: bold;
+    padding: 5px 20px;
+}
+
+#btnPagarRecibo{
+    background-color: var(--mainColor);
+    text-align: center;
+    border-radius: 20px;
+    border: 1px solid var(--mainColor);
+    color: white;
+    font-weight: bold;
+    padding: 5px 20px;
+}
+
+@media(max-width:650px){
+    .mainSection_paymentSection{
+        flex-flow: column-reverse;
+    }
+}
