@@ -1,0 +1,147 @@
+
+@model JDTelecomunicaciones.Models.Recibos;
+
+@{
+    Layout = "~/Views/Shared/_LayoutNotificaciones.cshtml";
+    decimal montoIgv = Math.Round((Model.monto_recibo * 0.18M),2);
+    decimal montoAntesIgv = Math.Round((Model.monto_recibo - montoIgv),2);
+    decimal montoTotal = montoIgv + montoAntesIgv;
+}
+
+@section Styles{
+    <style>
+        .voucherSection{
+            display: flex;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .voucerSection_voucher{
+            padding: 20px;
+            width: 70%;
+            background-color: white;
+            border-radius: 20px;
+            margin-top: 20px;
+            display: flex;
+            flex-flow: column;
+            gap: 40px;
+            height: max-content;
+            box-shadow: 6px 7px 3px #3130308a;
+        }
+
+        .voucher_header{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .voucher_header img{
+            width: 80px;
+        }
+
+        .voucherBody_priceContainer{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 20px;
+        }
+
+        .priceContianer_ammountCalculation{
+            display: flex;
+            flex-flow: column;
+            border: 2px solid #009bea;
+            border-radius: 5px;
+            padding: 20px;
+            width: max-content;
+            /* align-items: flex-end; */
+            text-align: center;
+        }
+
+        .voucherBody_info{
+            display: flex;
+            justify-content: space-between;
+            padding: 5px;
+            border-radius: 5px;
+            flex-direction: row-reverse;
+            margin-bottom: 30px;
+        }
+
+        .voucherBody_data{
+            display: flex;
+            width: 100%;
+            flex-direction: column;
+            box-shadow: 5px 5px 3px #d1d1d1;
+        }
+
+        .data_handler_header{
+            background-color: #009bea;
+            color: white;
+            font-weight: bold;
+            padding: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .data_handler{
+            display: flex;
+            gap: 5px;
+            padding: 5px;
+            justify-content: space-between;
+        }
+
+        .buttonHandler{
+            padding: 5px 10px;
+            background-color: #009bea;
+            color: white;
+            border-radius: 5px;
+            border-style: none;
+            width: 30%;
+            align-self: center;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .header_idVouvherContainer{
+            text-align: center;
+        }
+
+    </style>
+}
+
+<section class="voucherSection">
+    <section class="voucerSection_voucher">
+        <div class="voucher_header">
+            <img src="~/img/logo-jd.png" alt="JDTELCOM LOGO"/>
+            <div class="header_idVouvherContainer">
+                <h1>Codigo de Recibo</h1>
+                <h2>JD-@Model.idRecibo</h2>
+            </div>
+        </div>
+        <div class="voucher_voucherBody">
+            <div class="voucherBody_info">
+                <div class="voucherBody_data">
+                    <div class="data_handler_header">
+                        <label>Plan</label>
+                        <label>Mes</label>
+                        <label>Monto</label>
+                    </div>
+                    <div class="data_handler">
+                        <label>@Model.plan_recibo</label>
+                        <label>@Model.mes_recibo</label>
+                        <label>@Model.monto_recibo</label>
+                    </div>
+                </div>
+            </div>
+            <div class="voucherBody_priceContainer">
+                <div class="priceContianer_ammountCalculation">
+                    <label>Sub-Total: @montoAntesIgv</label>
+                    <label>IGV(18%): @montoIgv</label>
+                    <label style="border-top: 1px solid #009bea;">Total Recibo: S/@montoTotal</label>
+                </div>
+                <label>Pagar antes de @Model.fecha_vencimiento</label>
+            </div>
+        </div>
+        <a class="buttonHandler" asp-controller="Cliente" asp-action="Index">Volver</a>
+
+    </section>
+</section>

@@ -61,7 +61,7 @@ namespace JDTelecomunicaciones.Controllers
                 return user.rol_usuario switch
                 {
                     'A' => RedirectToAction("Index", "Administracion"),
-                    'C' => RedirectToAction("ServicioTecnico", "Cliente"),
+                    'C' => RedirectToAction("Index", "Cliente"),
                     'T' => RedirectToAction("Index", "Tecnico"),
                     _ => RedirectToAction("Error", "Home"),
                 };

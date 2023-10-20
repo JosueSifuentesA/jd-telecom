@@ -44,51 +44,10 @@ namespace JDTelecomunicaciones.Services
             Console.WriteLine("MESSAGE");
         }
 
-        /*private async Task GenerarRecibo(object state){
-
-            DateTime fechaActual = DateTime.Today;
-            DateTime fechaGeneracionRecibo = new DateTime(fechaActual.Year,fechaActual.Month,1).AddMonths(1);
-            DateTime fechaVencimiento = new(fechaActual.Year, fechaActual.Month, 30);
-            //bool voucherGenerated = false;
-            string nombreMes = fechaActual.ToString("MMMM");
-            Console.WriteLine("SE EJECUTO GENERAR RECIBO Fecha actual : " + fechaActual + " " + "Fecha de generacion de recibo : " + fechaGeneracionRecibo);
-            
-            if(voucherGenerated == true && fechaGeneracionRecibo.AddMonths(1) <= fechaActual){
-                voucherGenerated = false;
-                Console.WriteLine("MESSAGE VOUCHER GENERATED TRUE");
-            }
-            
-            if(fechaActual == fechaGeneracionRecibo && voucherGenerated == false){
-                using (var scope = _serviceProvider.CreateScope()){
-                    var _reciboService = scope.ServiceProvider.GetRequiredService<ReciboServiceImplement>();
-                    var _usuarioService = scope.ServiceProvider.GetRequiredService<UsuarioServiceImplement>();
-                    try{
-                            var recibos = await _reciboService.GetAllMonthlyUserVouchers(1,"");
-                            var usuarios = await _usuarioService.GetUsers();
-                            foreach(var usuario in usuarios){
-                                Console.WriteLine("Se genero un recibo " + usuario.nombre_usuario + " " + usuario.id_usuario);
-                                    if(usuario != null){
-                                        var recibo = new Recibos{plan_recibo="JD_BASICO",mes_recibo=nombreMes,fecha_vencimiento=fechaVencimiento.ToString("d/MM/yyyy"),monto_recibo=30.00m,estado_recibo="PENDIENTE",usuario = usuario};
-
-                                        await _reciboService.AddVoucher(recibo);
-                                        Console.WriteLine("SE AÑADIO EL RECIBO AL USUARIO : " + usuario.nombre_usuario + " " + usuario.id_usuario);
-                                        voucherGenerated = true;
-                                        Console.WriteLine("SIGUIENTE FECHA PARA GENERAR RECIBOS "+ fechaGeneracionRecibo.AddMonths(1) ); 
-                                    }
-                            }
-
-                    }catch(Exception e){
-                        Console.WriteLine("ERROR: " + e.Message);
-                        
-                    }
-                }
-            }
-        }*/
-
         public async  Task GenerarRecibo(object state){
             Console.WriteLine("Se ejecuto generar recibo");
-            //DateTime fechaActual = DateTime.Today;
-            DateTime fechaActual = new DateTime(2023, 11, 1);
+            DateTime fechaActual = DateTime.Today;
+            //DateTime fechaActual = new DateTime(2023, 11, 1);
             DateTime fechaGeneracionRecibo = new DateTime(fechaActual.Year, fechaActual.Month, 1);
             DateTime fechaVencimiento = fechaGeneracionRecibo.AddMonths(1).AddDays(-1);
             string nombreMes = fechaActual.ToString("MMMM");

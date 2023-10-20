@@ -4,11 +4,12 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using DotNetEnv;
 using JDTelecomunicaciones.Services;
 using JDTelecomunicaciones.Models;
+//using Rotativa
 
 Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
-
+//var env = IWebHostEnviroment
 
 // Add services to the container.
 builder.Services.AddHttpClient();
@@ -73,5 +74,8 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+//Rotativa.AspNetCore.RotativaConfiguration.Setup(env.WebRootPath,"../Rotativa")
+
 
 app.Run();

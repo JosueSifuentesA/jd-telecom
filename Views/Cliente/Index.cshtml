@@ -13,6 +13,14 @@
 @section Scripts{
    <script src="https://sdk.mercadopago.com/js/v2"></script>
    <script src="~/js/pagoRecibosIndex.js"></script>
+   <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+   <df-messenger
+      intent="WELCOME"
+      chat-title="bot-prueba"
+      agent-id="667e5e33-3d53-44da-8eb6-7e020452213e"
+      language-code="es"
+   ></df-messenger>
+     
 }
 
 @section Styles{
@@ -57,8 +65,8 @@
 <section class="mainSection">
    <div class="mainSection_paymentSection">
       <div class="paymentSection_statusSection">
-         <label>Estado del servicio : ACTIVO</label>
-         <span>¡Quedan 20 dias para que se genere un nuevo recibo!</span>
+         <label>Estado del servicio : <strong>ACTIVO</strong></label>
+         <span>¡Quedan @ViewBag.nextVoucherTime dias para que se genere un nuevo recibo!</span>
          <a href="#">Cambiar de plan</a>
       </div>
 
@@ -72,11 +80,11 @@
 
             @foreach(var recibo in Model){
                <div class="voucherHandler_voucher">
-               <input type="checkbox"/>
-               <label hidden>@recibo.idRecibo</label>
-               <label>@recibo.fecha_vencimiento</label>
-               <label>S/@recibo.monto_recibo</label>
-            </div>
+                  <input type="checkbox" class="reciboCheckBox"/>
+                  <label hidden>@recibo.idRecibo</label>
+                  <label>@recibo.fecha_vencimiento</label>
+                  <label>S/@recibo.monto_recibo</label>
+               </div>
             }
          </div>
          <div class="voucherHandler_options">
@@ -86,7 +94,7 @@
 
          <div class="voucherForm_mailSection">
             <label>Estas afiliado al recibo digital:</label>
-            <label>example@gmail.com</label>
+            <label class="mailSection_mail">@ViewBag.email</label>
          </div>
       </form>
 

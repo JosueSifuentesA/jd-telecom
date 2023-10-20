@@ -87,6 +87,23 @@ namespace JDTelecomunicaciones.Controllers
         }
 
         [Authorize(Roles ="C")]
+        //[HttpGet("/DetalleRecibo")]
+        [Route("/Cliente/DetalleRecibo")]
+        public IActionResult VerRecibos(int idRecibo){
+
+            var recibo = _reciboService.GetVoucherById(idRecibo).Result;
+            if(recibo == null){
+                Console.WriteLine("No se encontro ningun recibo");
+                return Error();
+            }
+            return View("DetalleRecibo",recibo);
+
+
+        }
+
+
+
+        [Authorize(Roles ="C")]
         [HttpPost]
         public async Task<IActionResult> RecibosPagadosPorMes(string mes)
         {
@@ -116,6 +133,18 @@ namespace JDTelecomunicaciones.Controllers
             if(idUserClaim != null){
                 int idUser = int.Parse(idUserClaim);
                 var recibosPendientes = await _reciboService.GetAllPendingVouchers(idUser);
+                var user = await _usuarioService.FindUserById(idUser);
+                ViewBag.email = user.correo_usuario; 
+
+                DateTime now = DateTime.Now;
+                DateTime nextMonth = now.AddMonths(1);
+                DateTime firstDayOfNextMonth = new DateTime(nextMonth.Year, nextMonth.Month, 1);
+
+                TimeSpan timeUntilNextMonth = firstDayOfNextMonth - now;
+                int daysUntilNextMonth = (int)Math.Floor(timeUntilNextMonth.TotalDays);;
+
+                ViewBag.nextVoucherTime = daysUntilNextMonth;
+
                 return View("Index",recibosPendientes);
 
             }else{

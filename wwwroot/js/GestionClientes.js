@@ -123,4 +123,5 @@ $(document).ready(function() {
         // Oculta el PopUpContainer al hacer clic en el botón de cierre
         $('#popUpContainer').hide();
     });
+
 });

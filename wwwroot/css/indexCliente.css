@@ -6,6 +6,16 @@
     width: 100%;
 }
 
+strong{
+    color: var(--mainColor);
+    font-weight: bold;
+}
+
+.paymentSection_statusSection span{
+    color: red;
+    font-weight: bold;
+    font-size: 12px;
+}
 
 .mainSection_paymentSection{
     background-color: white;
@@ -57,6 +67,17 @@
     gap: 10px;
 }
 
+.voucherForm_mailSection{
+    display: flex;
+    flex-flow: column;
+}
+
+.mailSection_mail{
+    color: var(--mainColor);
+    font-weight: bold;
+}
+
+
 #btnVerRecibo{
     background-color: transparent;
     text-align: center;
@@ -65,6 +86,7 @@
     color: black;
     font-weight: bold;
     padding: 5px 20px;
+    cursor: pointer;
 }
 
 #btnPagarRecibo{
@@ -75,6 +97,7 @@
     color: white;
     font-weight: bold;
     padding: 5px 20px;
+    cursor: pointer;
 }
 
 @media(max-width:650px){

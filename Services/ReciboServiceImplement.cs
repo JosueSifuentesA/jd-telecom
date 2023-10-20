@@ -72,9 +72,22 @@ namespace JDTelecomunicaciones.Services
             return recibos;
         }
 
-        public Recibos GetVoucherById(int voucherId)
+        public async Task<Recibos> GetVoucherById(int voucherId)
         {
-            throw new NotImplementedException();
+            try{
+                var recibos =  await _context.DB_Recibos.FindAsync(voucherId);
+                return recibos;
+            }catch(Exception e){
+                var recibo = new Recibos(){
+                    idRecibo = 9999,
+                    plan_recibo = "",
+                    mes_recibo = "",
+                    fecha_vencimiento = "",
+                    monto_recibo = 0,
+                };
+                Console.WriteLine(e.Message);
+                return recibo;
+            }
         }
     }
 }
