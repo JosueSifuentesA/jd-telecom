@@ -1,0 +1,142 @@
+.PlanModule{
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    padding: 20px;
+}
+
+.PlanModule_planSectionContainer{
+    background-color: white;
+    padding: 10px;
+    width: 70%;
+    display: flex;
+    flex-flow: column;
+    gap: 10px;
+}
+
+.PlanModule_planSectionContainer h1{
+    color: blue;
+}
+
+.planSectionContainer_form select{
+    padding: 10px;
+}
+
+.planSectionContainer_form button{
+    background-color: #0061ff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    border-style: none;
+}
+
+.PlanSectionContainer_planHandler{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    overflow: auto;
+    justify-content: center;
+}
+
+.PlanCard{
+    background-color: white;
+    display: flex;
+    flex-flow: column;
+    border: #0061ff 1.5px solid;
+    border-radius: 5px;
+    width: 180px;
+    overflow: hidden;
+}
+
+.PlanCard_header{
+    background-color: yellow;
+    padding: 10px;
+    text-align: center;
+}
+
+
+.PlanCard_price{
+    color: #0348b7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.PlanCard_price label{
+    border-bottom: 1px solid blue;
+    width: 70%;
+    text-align: center;
+}
+
+.PlanCard_price label span{
+    font-size: 32px;
+    font-weight: bolder;
+}
+
+.PlanCard_description{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    padding: 10px;
+}
+
+.description_webSpeed{
+    color: #0061ff;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.description_info{
+    font-size: 10px;
+    color: gray;
+    text-align: center;
+}
+
+.PlanCard_infoContainer{
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+}
+
+.infoContainer_info{
+    font-size: 10px;
+    display: flex;
+    flex-flow: column;
+}
+
+.infoContainer_icons{
+    display: flex;
+    flex-flow: column;
+    font-size: 10px;
+}
+
+#btnSeleccionar{
+    background-color: #0061ff;
+    width: 80%;
+    align-self: center;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    border-style: none;
+    padding: 5px 10px;
+    margin: 10px;
+}
+
+.PlanModule_PlanSelectedContainer{
+
+    background-color: white;
+    width: 30%;
+    padding: 15px 10px;
+    border-radius: 15px;
+    display: flex;
+    flex-flow: column;
+    gap: 15px;
+
+}
+
+.PlanModule_PlanSelectedContainer h1{
+    color: #0061ff;
+}

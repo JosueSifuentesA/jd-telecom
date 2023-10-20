@@ -1,0 +1,52 @@
+@{
+    Layout = "~/Views/Shared/_LayoutCliente.cshtml"; 
+}
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/misPlanes.css" asp-append-version="true" />
+
+}
+
+<section class="PlanModule">
+    <section class="PlanModule_planSectionContainer">
+        <h1>Mira todos nuestros planes</h1>
+        <form class="planSectionContainer_form">
+            <select>
+                <option>Precio entre S/0 - S/150</option>
+                <option>Precio entre S/150 - S/200</option>
+            </select>
+            <button type="submit">Filtrar</button>
+        </form>
+        <section class="PlanSectionContainer_planHandler">
+            <div class="PlanCard">
+                <div class="PlanCard_header">
+                    <label>Plan JD Basico</label>
+                </div>
+                <div class="PlanCard_price">
+                    <label>s/<span>80</span>x mes</label>
+                </div>
+                <div class="PlanCard_description">
+                    <label class="description_webSpeed">20 Mbps</label>
+                    <label class="description_info">Perfecto para navegacion basica y correos electronicos</label>
+                </div>
+                <div class="PlanCard_infoContainer">
+                    <div class="infoContainer_info">
+                        <label>Modem WI-FI</label>
+                        <label>Descargas ilimitadas</label>
+                        <label>+ canales HD/SD</label>
+                    </div>
+                    <div class="infoContainer_icons">
+                        <img alt="Icon of a Switch o Computer"/>
+                        <img alt="Icon of a Switch o Computer"/>
+                    </div>
+                </div>
+                <button id="btnSeleccionar">Seleccionar</button>
+            </div>
+        </section>
+    </section>
+    <section class="PlanModule_PlanSelectedContainer">
+        <h1>No tienes ningun plan activo</h1>
+        <span>Selecciona un plan de tu preferencia para contratarlo</span>
+        <img src="#" alt="Smiling Face"/>
+    </section>
+</section>

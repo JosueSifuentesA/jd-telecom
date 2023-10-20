@@ -15,6 +15,6 @@ namespace JDTelecomunicaciones.Data
         public DbSet<Persona> DB_Personas {get;set;}
         public DbSet<Promocion> DB_Promociones {get;set;}
         public DbSet<Recibos> DB_Recibos {get;set;}
-    
+        public DbSet<Planes> DB_Planes {get;set;}
     }
 }

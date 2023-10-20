@@ -38,10 +38,17 @@ namespace JDTelecomunicaciones.Controllers
 
             _context = context;
         }
+
+        [Authorize(Roles="C")]
+        [HttpGet("MisPlanes")]
+        public IActionResult MisPlanes(){
+            
+            return View("MisPlanes");
+        }
+
         [Authorize(Roles ="C")]
         [HttpGet("ServicioTecnico")]
-        public async Task<IActionResult> ServicioTecnico()
-        {
+        public async Task<IActionResult> ServicioTecnico(){
             var idUserClaim =  User.FindFirst("idUser").Value;
             int idUser = int.Parse(idUserClaim);
 
@@ -171,7 +178,7 @@ namespace JDTelecomunicaciones.Controllers
         [Authorize(Roles ="C")]
         [HttpGet("/PagoFallido")]
         public IActionResult PagoFallido([FromQuery] string statusPago, [FromQuery] string statusMsg,[FromQuery] string data){
-            //var paymentInfo = System.Net.WebUtility.UrlDecode(data);
+
             
             dynamic paymentObject = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
             Console.WriteLine(paymentObject.paymentAmount);
