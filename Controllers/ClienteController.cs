@@ -23,17 +23,15 @@ namespace JDTelecomunicaciones.Controllers
         private readonly UsuarioServiceImplement _usuarioService;
         private readonly ReciboServiceImplement _reciboService;
         private readonly ApplicationDbContext _context;
-
+        private readonly PlanesServiceImplement _planService;
         private readonly MercadoPagoServiceImplement _mercadoPagoService;
-        private Timer _timer;
 
-
-        public ClienteController(TicketServiceImplement ticketService,UsuarioServiceImplement usuarioService,ReciboServiceImplement reciboService,ApplicationDbContext context , MercadoPagoServiceImplement mercadoPagoService)
+        public ClienteController(PlanesServiceImplement planService,TicketServiceImplement ticketService,UsuarioServiceImplement usuarioService,ReciboServiceImplement reciboService,ApplicationDbContext context , MercadoPagoServiceImplement mercadoPagoService)
         {
             _ticketService = ticketService;
             _usuarioService = usuarioService;
             _reciboService = reciboService;
-            
+            _planService = planService;
             _mercadoPagoService = mercadoPagoService;
 
             _context = context;
@@ -42,14 +40,16 @@ namespace JDTelecomunicaciones.Controllers
         [Authorize(Roles="C")]
         [HttpGet("MisPlanes")]
         public IActionResult MisPlanes(){
-            
-            return View("MisPlanes");
+
+            var planes = _planService.GetAllPlans();
+
+            return View("MisPlanes",planes);
         }
 
         [Authorize(Roles ="C")]
         [HttpGet("ServicioTecnico")]
         public async Task<IActionResult> ServicioTecnico(){
-            var idUserClaim =  User.FindFirst("idUser").Value;
+            var idUserClaim =  User.FindFirst("idUser")?.Value;
             int idUser = int.Parse(idUserClaim);
 
             var miUsuario = await _usuarioService.FindUserById(idUser);
@@ -64,7 +64,7 @@ namespace JDTelecomunicaciones.Controllers
         public async Task<IActionResult> EnviarTicket(string tipoProblematica,string descripcion){
             DateTime fechaActual = DateTime.Today;
             string fechaActualS = fechaActual.ToString("dd/MM/yyyy");
-            var idUserClaim = User.FindFirst("idUser").Value;
+            var idUserClaim = User.FindFirst("idUser")?.Value;
             int idUser = int.Parse(idUserClaim);
             var miUsuario = await _usuarioService.FindUserById(idUser);
 

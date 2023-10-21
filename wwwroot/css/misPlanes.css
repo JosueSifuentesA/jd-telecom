@@ -49,6 +49,10 @@
     border-radius: 5px;
     width: 180px;
     overflow: hidden;
+    height: max-content;
+    height: 360px;
+    justify-content: space-between;
+    align-self: center;
 }
 
 .PlanCard_header{
@@ -125,6 +129,18 @@
     margin: 10px;
 }
 
+#btnSolicitar{
+    background-color: #0061ff;
+    width: 80%;
+    align-self: center;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    border-style: none;
+    padding: 5px 10px;
+    margin: 10px;
+}
+
 .PlanModule_PlanSelectedContainer{
 
     background-color: white;
@@ -134,9 +150,33 @@
     display: flex;
     flex-flow: column;
     gap: 15px;
+    overflow: auto;
 
+}
+
+.PlanSelectedContainer_actualPlan{
+    display: flex;
+    flex-flow: column;
+    gap: 15px;
 }
 
 .PlanModule_PlanSelectedContainer h1{
     color: #0061ff;
+}
+
+.PlanModule_PlanSelectedContainer img{
+    width: 80%;
+    align-self: center;
+}
+
+.planSelectedHandler{
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
+    width: 100%;
+    gap: 15px;
+}
+
+.planSelectedHandler h1{
+    font-size: 28px;
 }

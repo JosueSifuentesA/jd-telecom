@@ -14,8 +14,9 @@ namespace JDTelecomunicaciones.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int id {get;set;}
-        public decimal precio {get;set;}
-        public string descripcion {get;set;}
-        public int velocidad {get;set;}
+        public decimal precio_plan {get;set;}
+        public string nombre_plan {get;set;}
+        public string descripcion_plan {get;set;}
+        public int velocidad_plan {get;set;}
     }
 }
