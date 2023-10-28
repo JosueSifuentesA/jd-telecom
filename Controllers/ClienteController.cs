@@ -48,11 +48,15 @@ namespace JDTelecomunicaciones.Controllers
 
             var planes = _planService.GetAllPlans().Result;
             var usuario = await _usuarioService.FindUserById(idUser);
-
+            ModeloConListas<Servicios, Planes> miModelo;
             Console.WriteLine($"El id del servicio es : {usuario}");
-            var userService = _servicioService.GetServiceById(usuario.servicios.Id_servicios);
+            if(usuario.servicios != null){
+                var userService = _servicioService.GetServiceById(usuario.servicios.Id_servicios);
+                miModelo = new(userService,planes);
+            }else{
+                miModelo = new(null,planes);
+            }
 
-            ModeloConListas<Servicios, Planes> miModelo = new(userService,planes);
             return View("MisPlanes",miModelo);
         }
 

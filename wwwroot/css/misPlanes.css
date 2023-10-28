@@ -143,6 +143,12 @@
     cursor: pointer;
 }
 
+.PlanSelectedContainer_actualPlan_Inactive{
+    display: flex;
+    flex-flow: column;
+    gap: 15px;
+}
+
 .PlanModule_PlanSelectedContainer{
 
     background-color: white;

@@ -9,14 +9,35 @@ $(document).ready(function () {
         var newClonedPlanCard = selectedPlanCard.clone();
         newClonedPlanCard.find('#btnSeleccionar').replaceWith('<button id="btnSolicitar">Solicitalo</button>');
 
-        if (clonedPlanCard) {
+        /*if (clonedPlanCard) {
             $('.planSelectedHandler').empty().append('<h1>Plan seleccionado:</h1>', newClonedPlanCard);
         } else {
             $('.planSelectedHandler').empty().append('<h1>Plan seleccionado:</h1>', newClonedPlanCard);
+        }*/
+        
+        var planSelectedContainer = $('.PlanModule_PlanSelectedContainer');
+
+
+        if (planSelectedContainer.find('.PlanSelectedContainer_actualPlan').length > 0) {
+            if (clonedPlanCard) {
+                $('.planSelectedHandler').empty().append('<h1>Plan seleccionado:</h1>', newClonedPlanCard);
+            } else {
+                $('.planSelectedHandler').empty().append('<h1>Plan seleccionado:</h1>', newClonedPlanCard);
+            }
+        } else {
+            if (clonedPlanCard) {
+                $('.planSelectedHandler').empty().append('<h1>Plan seleccionado:</h1>', newClonedPlanCard);
+                $('.PlanSelectedContainer_actualPlan_Inactive').hide();
+            }else {
+                $('.planSelectedHandler').empty().append('<h1>Plan seleccionado:</h1>', newClonedPlanCard);
+            }
         }
-        $('.PlanSelectedContainer_actualPlan').hide();
+
+
+
         clonedPlanCard = newClonedPlanCard;
     });
+
 
     $(".planSelectedHandler").on("click", "#btnSolicitar", function(event) {
         event.preventDefault()
@@ -33,12 +54,17 @@ $(document).ready(function () {
             headers: {
                 "Content-Type": "application/json",
             },
+        }).then(()=>{
+            window.location.href = window.location
         })
         
         
 
 
     });
+
+
+
 
 
 
