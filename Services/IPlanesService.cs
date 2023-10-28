@@ -8,6 +8,6 @@ namespace JDTelecomunicaciones.Services
 {
     public interface IPlanesService
     {
-        public List<Planes> GetAllPlans();
+        public Task<List<Planes>> GetAllPlans();
     }
 }

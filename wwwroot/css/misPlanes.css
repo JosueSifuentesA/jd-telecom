@@ -127,6 +127,7 @@
     border-style: none;
     padding: 5px 10px;
     margin: 10px;
+    cursor: pointer;
 }
 
 #btnSolicitar{
@@ -139,6 +140,7 @@
     border-style: none;
     padding: 5px 10px;
     margin: 10px;
+    cursor: pointer;
 }
 
 .PlanModule_PlanSelectedContainer{
@@ -165,7 +167,7 @@
 }
 
 .PlanModule_PlanSelectedContainer img{
-    width: 80%;
+    width: 50%;
     align-self: center;
 }
 

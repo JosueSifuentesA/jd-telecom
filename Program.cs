@@ -31,6 +31,7 @@ builder.Services.AddScoped<PromocionServiceImplement>();
 builder.Services.AddScoped<MercadoPagoServiceImplement>();
 builder.Services.AddScoped<ReciboServiceImplement>();
 builder.Services.AddScoped<PlanesServiceImplement>();
+builder.Services.AddScoped<ServicioServiceImplement>();
 builder.Services.AddHostedService<ReciboHostedService>();
 //builder.Services.AddScoped<PersonaServiceImplement>();
 //builder.Services.AddScoped<ProductoServiceImplement>();

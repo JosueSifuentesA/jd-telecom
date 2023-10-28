@@ -13,8 +13,8 @@ namespace JDTelecomunicaciones.Services
     public class ReciboServiceImplement : IRecibosService
     {
         
-        private Timer? _timer;
-        private System.Threading.Timer? _timer2;
+        //private Timer? _timer;
+        //private System.Threading.Timer? _timer2;
         private readonly ApplicationDbContext _context;
         public ReciboServiceImplement(ApplicationDbContext context){
             _context = context;

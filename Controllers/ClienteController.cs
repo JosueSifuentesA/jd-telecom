@@ -25,25 +25,35 @@ namespace JDTelecomunicaciones.Controllers
         private readonly ApplicationDbContext _context;
         private readonly PlanesServiceImplement _planService;
         private readonly MercadoPagoServiceImplement _mercadoPagoService;
+        private readonly ServicioServiceImplement _servicioService;
 
-        public ClienteController(PlanesServiceImplement planService,TicketServiceImplement ticketService,UsuarioServiceImplement usuarioService,ReciboServiceImplement reciboService,ApplicationDbContext context , MercadoPagoServiceImplement mercadoPagoService)
+        public ClienteController(ServicioServiceImplement servicioService,PlanesServiceImplement planService,TicketServiceImplement ticketService,UsuarioServiceImplement usuarioService,ReciboServiceImplement reciboService,ApplicationDbContext context , MercadoPagoServiceImplement mercadoPagoService)
         {
             _ticketService = ticketService;
             _usuarioService = usuarioService;
             _reciboService = reciboService;
             _planService = planService;
             _mercadoPagoService = mercadoPagoService;
+            _servicioService = servicioService;
 
             _context = context;
         }
 
         [Authorize(Roles="C")]
         [HttpGet("MisPlanes")]
-        public IActionResult MisPlanes(){
+        public async Task<IActionResult> MisPlanes(){
 
-            var planes = _planService.GetAllPlans();
+            var idUserClaim =  User.FindFirst("idUser")?.Value;
+            int idUser = int.Parse(idUserClaim);
 
-            return View("MisPlanes",planes);
+            var planes = _planService.GetAllPlans().Result;
+            var usuario = await _usuarioService.FindUserById(idUser);
+
+            Console.WriteLine($"El id del servicio es : {usuario}");
+            var userService = _servicioService.GetServiceById(usuario.servicios.Id_servicios);
+
+            ModeloConListas<Servicios, Planes> miModelo = new(userService,planes);
+            return View("MisPlanes",miModelo);
         }
 
         [Authorize(Roles ="C")]
@@ -94,7 +104,6 @@ namespace JDTelecomunicaciones.Controllers
         }
 
         [Authorize(Roles ="C")]
-        //[HttpGet("/DetalleRecibo")]
         [Route("/Cliente/DetalleRecibo")]
         public IActionResult VerRecibos(int idRecibo){
 
@@ -108,6 +117,45 @@ namespace JDTelecomunicaciones.Controllers
 
         }
 
+        [Authorize(Roles ="C")]
+        [HttpPost("SolicitarPlan")]
+        public async Task<IActionResult> SolicitarPlan([FromQuery] string planId){
+
+            try{
+                Console.WriteLine($"El planId seleccionado es : {planId}");
+                int iPlanId = int.Parse(planId);
+                var idUserClaim =  User.FindFirst("idUser")?.Value;
+                int idUser = int.Parse(idUserClaim);
+
+                var miPlan = _planService.GetPlanById(iPlanId).Result;
+
+                if(miPlan != null){
+                    var myService = new Servicios(){
+                        FechaActivacion_Servicio= DateTime.Today.ToString("d/MM/yyyy"),
+                        PeriodoFacturacion_Servicio=DateTime.Today.AddMonths(1).ToString("d/MM/yyyy"),
+                        Estado_Servicio='A',
+                        Plan_Servicio= miPlan
+
+                    };
+                    var myNuevoUsuario = _usuarioService.FindUserById(idUser).Result;
+                    
+                    if(myNuevoUsuario != null){
+                        try{
+                            _servicioService.AddService(myService);
+                            myNuevoUsuario.servicios = myService;
+
+                            await _usuarioService.EditUser(idUser,myNuevoUsuario);
+                        }catch(Exception e){
+                            Console.WriteLine(e.Message);
+                        }
+                    }
+                }
+                return Ok();
+            }catch(Exception e){
+                Console.WriteLine(e.Message);
+                return BadRequest(e);
+            }
+        }
 
 
         [Authorize(Roles ="C")]
@@ -247,5 +295,9 @@ namespace JDTelecomunicaciones.Controllers
         {
             return View("Error!");
         }
+    }
+
+    internal class ModeloConListas
+    {
     }
 }

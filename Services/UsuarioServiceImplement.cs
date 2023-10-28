@@ -20,6 +20,7 @@ namespace JDTelecomunicaciones.Services
         try{
             var usuario = await _context.DB_Usuarios
             .Include(u => u.persona)
+            .Include(u=>u.servicios)
             .FirstOrDefaultAsync(u => u.id_usuario == id);
             
             return usuario;
@@ -64,6 +65,7 @@ namespace JDTelecomunicaciones.Services
                 userToChange.correo_usuario = usuario.correo_usuario;
                 userToChange.rol_usuario = usuario.rol_usuario;
                 userToChange.contraseña_usuario = usuario.contraseña_usuario;
+                userToChange.servicios = usuario.servicios;
                 await _context.SaveChangesAsync();
             }
         }catch(Exception e){

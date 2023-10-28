@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using JDTelecomunicaciones.Data;
 using JDTelecomunicaciones.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace JDTelecomunicaciones.Services
 {
@@ -17,10 +18,10 @@ namespace JDTelecomunicaciones.Services
             _context = context;
         }
 
-        public List<Planes> GetAllPlans(){
+        public async Task<List<Planes>> GetAllPlans(){
             try
             {
-                var planes = _context.DB_Planes.ToList();
+                var planes = await _context.DB_Planes.ToListAsync();
                 return planes;
             }
             catch (Exception e)
@@ -30,5 +31,20 @@ namespace JDTelecomunicaciones.Services
                 throw;
             }
         }
+
+        public async Task<Planes> GetPlanById(int planId){
+            try
+            {
+                var planes = await _context.DB_Planes.FindAsync(planId);
+                return planes;
+            }
+            catch (Exception e)
+            {   
+                Console.WriteLine(e.Message);
+                return null ;
+                throw;
+            }
+        }
+
     }
 }

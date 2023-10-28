@@ -1,7 +1,10 @@
-@model List<JDTelecomunicaciones.Models.Planes>
+@model JDTelecomunicaciones.Models.ModeloConListas<Servicios,Planes>
 @{
     Layout = "~/Views/Shared/_LayoutCliente.cshtml";
-    Console.WriteLine(Model.Count());
+    //Console.WriteLine(Model.Count());
+    var userService = Model.ModeloT;
+    var planes = Model.ModelosS;
+
 }
 
 @section Styles{
@@ -24,8 +27,8 @@
             <button type="submit">Filtrar</button>
         </form>
         <section class="PlanSectionContainer_planHandler">
-            @if(Model.Count()>0){
-                @foreach(var plan in Model){
+            @if(planes.Count()>0){
+                @foreach(var plan in planes){
                     <div class="PlanCard">
                         <label hidden>@plan.id</label>
                         <div class="PlanCard_header">
@@ -58,11 +61,53 @@
         </section>
     </section>
     <section class="PlanModule_PlanSelectedContainer">
-        <div class="PlanSelectedContainer_actualPlan">
-            <h1>No tienes ningun plan activo</h1>
-            <span>Selecciona un plan de tu preferencia para contratarlo</span>
-            <img src="~/img/carita.png" alt="Smiling Face"/>
-        </div>
+            @if(userService== null){    
+                <div class="PlanSelectedContainer_actualPlan">
+                    <h1>No tienes ningun plan activo</h1>
+                    <span>Selecciona un plan de tu preferencia para contratarlo</span>
+                    <img src="~/img/carita.png" alt="Smiling Face"/>
+                </div>
+            }else{
+                <div class="PlanSelectedContainer_actualPlan">
+                    <h1>Plan Actual : @userService.Plan_Servicio.nombre_plan</h1>
+                    <label>Estado del servicio: 
+                        @if(userService.Estado_Servicio=='A'){ 
+                        <strong>Activo</strong>
+                        }else{
+                        <strong>Expirado</strong>
+                        }
+                    </label>
+                    <span>¡Quedan 20 dias para que se genere un nuevo recibo!</span>
+                    <label>Servicio activo desde <storng>@userService.FechaActivacion_Servicio</storng></label>
+                    <label>Periodo de facturacion <storng>@userService.PeriodoFacturacion_Servicio</storng></label>
+
+                    <div class="PlanCard">
+                            <label hidden>@userService.Plan_Servicio.id</label>
+                            <div class="PlanCard_header">
+                                <label>@userService.Plan_Servicio.nombre_plan</label>
+                            </div>
+                            <div class="PlanCard_price">
+                                <label>s/<span>@String.Format("{0}", userService.Plan_Servicio.precio_plan.ToString("0"))</span>x mes</label>
+                            </div>
+                            <div class="PlanCard_description">
+                                <label class="description_webSpeed">@userService.Plan_Servicio.velocidad_plan Mbps</label>
+                                <label class="description_info">@userService.Plan_Servicio.descripcion_plan</label>
+                            </div>
+                            <div class="PlanCard_infoContainer">
+                                <div class="infoContainer_info">
+                                    <label>Modem WI-FI</label>
+                                    <label>Descargas ilimitadas</label>
+                                    <label>+ canales HD/SD</label>
+                                </div>
+                                <div class="infoContainer_icons">
+                                    <img  alt="Icon of a Switch o Computer"/>
+                                    <img  alt="Icon of a Switch o Computer"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+            }
         <div class="planSelectedHandler"></div>
     </section>
 </section>

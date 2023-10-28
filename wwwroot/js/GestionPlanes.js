@@ -2,25 +2,46 @@ $(document).ready(function () {
 
     var clonedPlanCard = null;
 
-    $('.PlanCard #btnSeleccionar').click(function () {
-        // Obtener la PlanCard seleccionada
+    $('.PlanCard #btnSeleccionar').click(function (event) {
+        event.preventDefault()
         var selectedPlanCard = $(this).closest('.PlanCard');
 
-        // Clonar la PlanCard seleccionada
         var newClonedPlanCard = selectedPlanCard.clone();
         newClonedPlanCard.find('#btnSeleccionar').replaceWith('<button id="btnSolicitar">Solicitalo</button>');
 
         if (clonedPlanCard) {
-            // Si ya existe un clon, vaciar el contenedor y agregar el nuevo clon
             $('.planSelectedHandler').empty().append('<h1>Plan seleccionado:</h1>', newClonedPlanCard);
         } else {
-            // Si no hay un clon, simplemente agregar el nuevo clon al contenedor
             $('.planSelectedHandler').empty().append('<h1>Plan seleccionado:</h1>', newClonedPlanCard);
         }
         $('.PlanSelectedContainer_actualPlan').hide();
-        // Actualizar la variable clonedPlanCard
         clonedPlanCard = newClonedPlanCard;
     });
+
+    $(".planSelectedHandler").on("click", "#btnSolicitar", function(event) {
+        event.preventDefault()
+        var planId = $(this).closest(".PlanCard").find("label:hidden").text();
+    
+        console.log("El plan ID es: " + planId);
+     
+        var planId = $(this).closest(".PlanCard").find("label:hidden").text();
+
+        var url = `/Cliente/SolicitarPlan?planId=${planId}`;
+        
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        
+        
+
+
+    });
+
+
+
 
     function crearPlan(nombrePlan,precioPlan,velocidadPlan,descripcionPlan){
 
