@@ -20,7 +20,8 @@ namespace JDTelecomunicaciones.Services
         try{
             var usuario = await _context.DB_Usuarios
             .Include(u => u.persona)
-            .Include(u=>u.servicios)
+            .Include(s=>s.servicios)
+                .ThenInclude(s => s.Plan_Servicio)
             .FirstOrDefaultAsync(u => u.id_usuario == id);
             
             return usuario;

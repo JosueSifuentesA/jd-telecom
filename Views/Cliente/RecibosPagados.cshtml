@@ -10,7 +10,7 @@
 }
 
 @section Scripts{
-
+    <script src="~/js/RecibosPagados.js"></script>
 }
 
 <section class="MainSection">
@@ -37,10 +37,15 @@
         <section class="RecibosPagadosSection_contenedorRecibos">
             @if(recibosPagados.Count() > 0){
                 @foreach(var item in recibosPagados){
-                    <div>
+                    <div class="contenedorRecibos_recibo">
                         <label>Plan @item.plan_recibo</label>
-                        <label>JDK-@item.idRecibo</label>
-                        <label>@item.mes_recibo</label>
+                        <div class="recibo_identificadorRecibo">
+                            <label id="reciboName">JDK-@item.idRecibo</label>
+                            <div class="identificadorRecibo_downloadContainer">
+                                <img src="~/img/downloadIcon.svg" alt="A icon of Download"/>
+                            </div>
+                        </div>
+                        <label class="recibo_mesRecibo">@item.mes_recibo</label>
                         <label>@item.fecha_vencimiento</label>
                         <label>S/@item.monto_recibo</label>
                     </div>

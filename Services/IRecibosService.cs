@@ -13,5 +13,8 @@ namespace JDTelecomunicaciones.Services
         public Task AddVoucher(Recibos recibo);
         public Task DeleteVoucher(int id);
         public Task<Recibos> GetVoucherById(int voucherId);
+
+        //public void GenerateVoucherPDF(string pdfName, Usuario usuario,Servicios servicio,Planes plan);
+        public byte[] GeneratePDFContent(Usuario usuario, Servicios servicio, Planes plan);
     }
 }

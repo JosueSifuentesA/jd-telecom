@@ -305,6 +305,26 @@ namespace JDTelecomunicaciones.Controllers
             return View("PagoEnProceso");
         }
 
+        [Authorize(Roles ="C")]
+        [HttpGet("/GenerarRecibos")]
+        public IActionResult GenerarRecibo(string idRecibo){
+            Console.WriteLine("GenerarPDF ACTIVADO");
+            var idUserClaim =  User.FindFirst("idUser")?.Value;
+            int idUser = int.Parse(idUserClaim);
+            Console.WriteLine(idUser);
+            var usuario = _usuarioService.FindUserById(idUser).Result;
+            if(usuario != null){
+                var servicio = usuario.servicios;
+                var plan=usuario.servicios.Plan_Servicio;
+                byte[] pdfData = _reciboService.GeneratePDFContent(usuario, servicio, plan);
+                Response.Headers.Add("Content-Disposition", "attachment; filename=" + idRecibo + ".pdf");
+                return File(pdfData, "application/pdf");
+            }else{
+                return BadRequest();
+            }
+
+        }
+
 
         [Authorize(Roles ="C")] 
         [HttpPost("/process_payment")]

@@ -11,6 +11,7 @@ using JDTelecomunicaciones.Models;
 using JDTelecomunicaciones.Data;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace JDTelecomunicaciones.Controllers
 {
     [Route("[controller]")]
@@ -21,8 +22,7 @@ namespace JDTelecomunicaciones.Controllers
         private readonly PromocionServiceImplement _promocionService;
         private readonly ApplicationDbContext _context;
 
-        public AdministracionController(PromocionServiceImplement promocionService,ApplicationDbContext context,ILogger<AdministracionController> logger,UsuarioServiceImplement usuarioService)
-        {
+        public AdministracionController(PromocionServiceImplement promocionService,ApplicationDbContext context,ILogger<AdministracionController> logger,UsuarioServiceImplement usuarioService){
             _logger = logger;
             _usuarioService = usuarioService;
             _context = context;
@@ -30,16 +30,14 @@ namespace JDTelecomunicaciones.Controllers
         }
 
         [HttpGet("Index")]
-        public async Task<IActionResult> Index()
-        {
+        public async Task<IActionResult> Index(){
             Console.WriteLine("INDEX ADMIN");
             var promociones = await _promocionService.GetAllPromotions();
             return View("Index",promociones);
         }
 
         [HttpGet("ListaClientes")]
-        public async Task<IActionResult> ListaClientes()
-        {
+        public async Task<IActionResult> ListaClientes(){
             var users = await _usuarioService.GetClientUsers();
             return View("ListaClientes",users);
         }
@@ -116,7 +114,7 @@ namespace JDTelecomunicaciones.Controllers
 
         }
 
-        
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
