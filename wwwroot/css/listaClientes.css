@@ -88,6 +88,17 @@
     align-self: flex-end;
 }
 
+#nuevoSelect{
+    border: none;
+    border-radius: 5px;
+    box-shadow: inset 0px 6px 10px rgba(0, 0, 0, 0.2);
+    height: 45px;
+    padding: 10px;
+    font-size: 15px;
+    background-color: #EBEBEB;
+}
+
+
 .userContainer_user img{
     width: 30px;
     height: 30px;

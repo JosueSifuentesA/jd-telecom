@@ -8,13 +8,19 @@ namespace JDTelecomunicaciones.Models
     public class ModeloConListas<T, S>
     {
 
-    public T? ModeloT { get; set; }
-    public List<S>? ModelosS { get; set; }
+        public T ModeloT { get; set; }
+        public List<S> ModelosS { get; set; }
 
-    public ModeloConListas(T modeloT, List<S> modelosS)
-    {
-        ModeloT = modeloT;
-        ModelosS = modelosS;
+        public ModeloConListas(T modeloT, List<S> modelosS)
+        {
+            ModeloT = modeloT;
+            ModelosS = modelosS;
+        }
+
+        public ModeloConListas()
+        {
+
+        }
+
     }
-}
 }

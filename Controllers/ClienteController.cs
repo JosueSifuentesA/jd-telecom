@@ -49,15 +49,115 @@ namespace JDTelecomunicaciones.Controllers
             var planes = _planService.GetAllPlans().Result;
             var usuario = await _usuarioService.FindUserById(idUser);
             ModeloConListas<Servicios, Planes> miModelo;
-            Console.WriteLine($"El id del servicio es : {usuario}");
             if(usuario.servicios != null){
-                var userService = _servicioService.GetServiceById(usuario.servicios.Id_servicios);
+                var userService = await _servicioService.GetServiceById(usuario.servicios.Id_servicios);
                 miModelo = new(userService,planes);
             }else{
                 miModelo = new(null,planes);
             }
-
             return View("MisPlanes",miModelo);
+        }
+
+        [Authorize(Roles ="C")]
+        [HttpGet("FiltrarPlanes")]
+        public async Task<IActionResult> FiltrarPlanes(string SelectedRange)
+        {
+            if (string.IsNullOrEmpty(SelectedRange))
+            {
+                return RedirectToAction("MisPlanes");
+            }
+
+            if (!SelectedRange.Contains('-'))
+            {
+                return RedirectToAction("MisPlanes");
+            }
+
+            if(SelectedRange == "Todos"){
+                return RedirectToAction("MisPlanes");
+            }
+
+            var rangeParts = SelectedRange.Split('-');
+
+            if (rangeParts.Length != 2 || !int.TryParse(rangeParts[0], out int min) || !int.TryParse(rangeParts[1], out int max)){
+                return RedirectToAction("MisPlanes");
+            }
+
+            var idUser = int.Parse(User.FindFirst("idUser")?.Value);
+            var usuario = await _usuarioService.FindUserById(idUser);
+
+            var planesFiltrados = await _planService.GetPlanesFiltrados(min, max);
+
+            var userService = usuario.servicios != null
+                ? await _servicioService.GetServiceById(usuario.servicios.Id_servicios)
+                : null;
+
+            Console.WriteLine(userService.Plan_Servicio.nombre_plan);
+
+            var miModelo = new ModeloConListas<Servicios, Planes>(userService, planesFiltrados);
+
+            return View("MisPlanes", miModelo);
+        }
+        
+        [Authorize(Roles ="C")]
+        [HttpPost("SolicitarPlan")]
+        public async Task<IActionResult> SolicitarPlan([FromQuery] string planId){
+
+            try{
+                Console.WriteLine($"El planId seleccionado es : {planId}");
+                int iPlanId = int.Parse(planId);
+                var idUserClaim =  User.FindFirst("idUser")?.Value;
+                int idUser = int.Parse(idUserClaim);
+
+                var miPlan = _planService.GetPlanById(iPlanId).Result;
+
+                if(miPlan != null){
+                    var myService = new Servicios(){
+                        FechaActivacion_Servicio= DateTime.Today.ToString("d/MM/yyyy"),
+                        PeriodoFacturacion_Servicio=DateTime.Today.AddMonths(1).ToString("d/MM/yyyy"),
+                        Estado_Servicio='A',
+                        Plan_Servicio= miPlan
+
+                    };
+                    var myNuevoUsuario = _usuarioService.FindUserById(idUser).Result;
+                    
+                    if(myNuevoUsuario != null){
+                        try{
+                            _servicioService.AddService(myService);
+                            myNuevoUsuario.servicios = myService;
+
+                            await _usuarioService.EditUser(idUser,myNuevoUsuario);
+                        }catch(Exception e){
+                            Console.WriteLine(e.Message);
+                        }
+                    }
+                }
+                return Ok();
+            }catch(Exception e){
+                Console.WriteLine(e.Message);
+                return BadRequest(e);
+            }
+        }
+
+        [Authorize(Roles ="C")]
+        [HttpPost("CambiarPlan")]
+        public async Task<IActionResult> CambiarPlan([FromQuery] string planId){
+            Console.WriteLine(planId);
+            try{
+                int iPlanId = int.Parse(planId);
+                var idUserClaim =  User.FindFirst("idUser")?.Value;
+                int idUser = int.Parse(idUserClaim);
+                var user = await _usuarioService.FindUserById(idUser);
+                var idService = user.servicios.Id_servicios;
+                var myPlan = await _planService.GetPlanById(iPlanId);
+
+                await _servicioService.UpdatePlanService(idService,myPlan);
+
+                return Ok();
+
+            }catch(Exception e){
+                Console.WriteLine(e.Message);
+                return BadRequest(e);
+            }
         }
 
         [Authorize(Roles ="C")]
@@ -120,47 +220,6 @@ namespace JDTelecomunicaciones.Controllers
 
 
         }
-
-        [Authorize(Roles ="C")]
-        [HttpPost("SolicitarPlan")]
-        public async Task<IActionResult> SolicitarPlan([FromQuery] string planId){
-
-            try{
-                Console.WriteLine($"El planId seleccionado es : {planId}");
-                int iPlanId = int.Parse(planId);
-                var idUserClaim =  User.FindFirst("idUser")?.Value;
-                int idUser = int.Parse(idUserClaim);
-
-                var miPlan = _planService.GetPlanById(iPlanId).Result;
-
-                if(miPlan != null){
-                    var myService = new Servicios(){
-                        FechaActivacion_Servicio= DateTime.Today.ToString("d/MM/yyyy"),
-                        PeriodoFacturacion_Servicio=DateTime.Today.AddMonths(1).ToString("d/MM/yyyy"),
-                        Estado_Servicio='A',
-                        Plan_Servicio= miPlan
-
-                    };
-                    var myNuevoUsuario = _usuarioService.FindUserById(idUser).Result;
-                    
-                    if(myNuevoUsuario != null){
-                        try{
-                            _servicioService.AddService(myService);
-                            myNuevoUsuario.servicios = myService;
-
-                            await _usuarioService.EditUser(idUser,myNuevoUsuario);
-                        }catch(Exception e){
-                            Console.WriteLine(e.Message);
-                        }
-                    }
-                }
-                return Ok();
-            }catch(Exception e){
-                Console.WriteLine(e.Message);
-                return BadRequest(e);
-            }
-        }
-
 
         [Authorize(Roles ="C")]
         [HttpPost]

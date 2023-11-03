@@ -16,10 +16,27 @@ namespace JDTelecomunicaciones.Services
             _context = context;
         }
 
-        public async Task AddPromotion(Promocion promocion)
+        public async Task AddPromotion(string nombrePromocion, string efectoPromocion, byte[] imgSubidaByte)
         {
-            await _context.DB_Promociones.AddAsync(promocion);
-            await _context.SaveChangesAsync();
+            try{
+                
+                var promocion = new Promocion
+                {
+                    nombre_promocion=nombrePromocion,
+                    efecto_promocion=efectoPromocion,
+                    imgSubidaByte=imgSubidaByte,
+                };
+                
+                Console.WriteLine("PromocionDesdeObj: "+ promocion.nombre_promocion + " "+promocion.efecto_promocion + " " + promocion.imgSubidaByte.Length);
+                Console.WriteLine("ESTA ES LA PROMOCION : " + promocion);
+                Console.WriteLine(nombrePromocion + " "+efectoPromocion + " " + imgSubidaByte.Length);
+                
+                await _context.DB_Promociones.AddAsync(promocion);
+                await _context.SaveChangesAsync();
+
+            }catch(Exception e){
+                Console.WriteLine(e.Message);
+            }
         }
 
         public async Task DeletePromotion(int id)

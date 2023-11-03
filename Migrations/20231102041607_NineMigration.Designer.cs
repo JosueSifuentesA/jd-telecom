@@ -3,6 +3,7 @@ using System;
 using JDTelecomunicaciones.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JDTelecomunicaciones.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231102041607_NineMigration")]
+    partial class NineMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -276,9 +279,6 @@ namespace JDTelecomunicaciones.Migrations
                     b.Property<int>("personaid_persona")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("promocionesid_promocion")
-                        .HasColumnType("integer");
-
                     b.Property<char>("rol_usuario")
                         .HasColumnType("character(1)");
 
@@ -288,8 +288,6 @@ namespace JDTelecomunicaciones.Migrations
                     b.HasKey("id_usuario");
 
                     b.HasIndex("personaid_persona");
-
-                    b.HasIndex("promocionesid_promocion");
 
                     b.HasIndex("serviciosId_servicios");
 
@@ -337,17 +335,11 @@ namespace JDTelecomunicaciones.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("JDTelecomunicaciones.Models.Promocion", "promociones")
-                        .WithMany()
-                        .HasForeignKey("promocionesid_promocion");
-
                     b.HasOne("JDTelecomunicaciones.Models.Servicios", "servicios")
                         .WithMany()
                         .HasForeignKey("serviciosId_servicios");
 
                     b.Navigation("persona");
-
-                    b.Navigation("promociones");
 
                     b.Navigation("servicios");
                 });

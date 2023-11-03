@@ -1,6 +1,12 @@
-
+@model List<JDTelecomunicaciones.Models.Promocion>
 @{
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml"; 
 }
 
-<h1>INDEX ADMINISTRACION</h1>
+<section>
+    <h1>INDEX ADMINISTRACION</h1>
+
+    @foreach(var item in Model){
+    <img src="data:image/jpeg;base64,@Convert.ToBase64String(@item.imgSubidaByte)"/>
+    }
+</section>

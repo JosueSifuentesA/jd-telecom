@@ -23,6 +23,7 @@ namespace JDTelecomunicaciones.Models
         public Persona persona {get;set;}
 
         public Servicios? servicios {get;set;}
+        public Promocion? promociones {get;set;}
 
     }
 }

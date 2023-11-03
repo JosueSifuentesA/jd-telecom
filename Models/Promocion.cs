@@ -17,6 +17,6 @@ namespace JDTelecomunicaciones.Models
         public string nombre_promocion {get;set;}
         public string efecto_promocion {get;set;}
 
-        public Usuario usuario {get;set;}
+        public byte[]? imgSubidaByte {set;get;}
     }
 }

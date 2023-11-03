@@ -46,5 +46,21 @@ namespace JDTelecomunicaciones.Services
             }
         }
 
+        public async Task<List<Planes>> GetPlanesFiltrados(int min,int max){
+            try
+            {
+                var preciosFiltrados = await _context.DB_Planes
+                    .Where(p => p.precio_plan >= min && p.precio_plan <= max)
+                    .ToListAsync();
+                return preciosFiltrados;
+            }
+            catch (Exception e)
+            {   
+                Console.WriteLine(e.Message);
+                return new List<Planes>() ;
+                throw;
+            }
+        }
+
     }
 }

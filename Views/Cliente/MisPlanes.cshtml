@@ -19,17 +19,19 @@
 <section class="PlanModule">
     <section class="PlanModule_planSectionContainer">
         <h1>Mira todos nuestros planes</h1>
-        <form class="planSectionContainer_form">
-            <select>
-                <option>Precio entre S/0 - S/150</option>
-                <option>Precio entre S/150 - S/200</option>
+        <form class="planSectionContainer_form" method="GET" asp-action="FiltrarPlanes" asp-controller="Cliente">
+            <select name="SelectedRange">
+                <option value="Todos">Todos</option>
+                <option value="50-100">Entre 50 y 100</option>
+                <option value="100-150">Entre 100 y 150</option>
+                <option value="150-200">Entre 150 y 200</option>
             </select>
             <button type="submit">Filtrar</button>
         </form>
         <section class="PlanSectionContainer_planHandler">
-            @if(planes.Count()>0){
+            @if(planes != null /*planes.Count()>0*/){
                 @foreach(var plan in planes){
-                    <div class="PlanCard">
+                    <div class="PlanCard scale-up-center">
                         <label hidden>@plan.id</label>
                         <div class="PlanCard_header">
                             <label>@plan.nombre_plan</label>
@@ -61,7 +63,7 @@
         </section>
     </section>
     <section class="PlanModule_PlanSelectedContainer">
-            @if(userService== null){    
+            @if(userService == null){    
                 <div class="PlanSelectedContainer_actualPlan_Inactive">
                     <h1>No tienes ningun plan activo</h1>
                     <span>Selecciona un plan de tu preferencia para contratarlo</span>
@@ -81,7 +83,7 @@
                     <label>Servicio activo desde <storng>@userService.FechaActivacion_Servicio</storng></label>
                     <label>Periodo de facturacion <storng>@userService.PeriodoFacturacion_Servicio</storng></label>
 
-                    <div class="PlanCard">
+                    <div class="PlanCard scale-up-center">
                             <label hidden>@userService.Plan_Servicio.id</label>
                             <div class="PlanCard_header">
                                 <label>@userService.Plan_Servicio.nombre_plan</label>

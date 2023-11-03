@@ -5,17 +5,22 @@
     <link rel="stylesheet" href="~/css/promociones.css" asp-append-version="true" />
 }
 
+@section Scripts{
+ <script src="~/js/RegistrarPromocion.js" asp-append-version="true"></script>
+}
+
+
 <section>
         <div class="contenedorProm">
         <h1>CREAR PROMOCIONES</h1>
-        <form>
+        <form asp-controller="Administracion" asp-action="RegistrarPromocionPost" enctype="multipart/form-data" method="POST">
             <div class="contenedorCard">
                 <div class="card">
                     
                         <label>Nombre de la promocion</label>
-                        <input placeholder="ex. Referido , Promocion educativa , Aliado digital"/>
+                        <input name="nombrePromocion" placeholder="ex. Referido , Promocion educativa , Aliado digital"/>
                         <label>Efecto</label>
-                        <select>
+                        <select name="efectoPromocion">
                             <option>Ninguno</option>
                             <option>Eliminar ultimo recibo</option>
                             <option>Eliminar recibo de instalacion</option>
@@ -23,8 +28,17 @@
                     
                 </div>
                 <div class="card">
-                    <label>Imagen de la promocion</label>
-                    <img src="~/img/promocionLayer.png" alt="Promcion" />
+                    <div class="formPlatillo_inputHandler">
+                        <label>Imagen del Platillo</label>
+                        <div class="dropzoneContainer">
+                            <input id="fileInput" name="imgSubida" type="file" required />
+                            <img id="fileImg"/>
+                            <div id="fileMessageContainer" class="dropzoneContainer_message">
+                                <h1>Arrastra una imagen para añadirla </h1>
+                                <h2>&#8595</h2>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="botonB">

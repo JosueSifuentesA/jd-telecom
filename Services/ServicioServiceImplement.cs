@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using JDTelecomunicaciones.Data;
 using JDTelecomunicaciones.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace JDTelecomunicaciones.Services
 {
@@ -18,9 +19,16 @@ namespace JDTelecomunicaciones.Services
             _context.SaveChanges();
         }
 
-        public Servicios GetServiceById(int idService){
-            var myService = _context.DB_Servicios.Find(idService);
+        public async Task<Servicios> GetServiceById(int idService){
+            var myService = await _context.DB_Servicios.Include(s=>s.Plan_Servicio).FirstOrDefaultAsync(s => s.Id_servicios == idService);
             return myService;
         }
+
+        public async Task UpdatePlanService(int idService,Planes plan){
+            var myService = _context.DB_Servicios.Find(idService);
+            myService.Plan_Servicio = plan;
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

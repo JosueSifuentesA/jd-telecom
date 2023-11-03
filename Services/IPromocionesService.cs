@@ -10,7 +10,7 @@ namespace JDTelecomunicaciones.Services
     {
         public Task<List<Promocion>> GetAllPromotions();
         public Task<Promocion> GetPromotionById(int id);
-        public Task AddPromotion(Promocion promocion);
+        public Task AddPromotion(string nombrePromocion, string efectoPromocion, byte[] imgSubidaByte);
         public Task DeletePromotion(int id);
         public Task EditPromotion(int id,Promocion promocion);
         

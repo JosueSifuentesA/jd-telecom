@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    // Función para obtener los usuarios seleccionados
     function obtenerUsuariosSeleccionados() {
         var usuariosSeleccionados = [];
 
@@ -23,21 +22,17 @@ $(document).ready(function() {
         return usuariosSeleccionados;
     }
 
-    // Agrega un controlador de eventos a los botones "Asignar Descuento" y "Asignar Promoción"
     $('#btnAsignarDescuento, #btnAsignarPromocion').click(function() {
-        var accion = $(this).attr('id'); // Obtenemos el ID del botón clickeado
+        var accion = $(this).attr('id');
         var usuariosSeleccionados = obtenerUsuariosSeleccionados();
 
-        // Imprime el arreglo de usuarios seleccionados y la acción en la consola
         console.log('Acción:', accion);
         console.log('Usuarios Seleccionados:', usuariosSeleccionados);
 
-        // Aquí comienza la adaptación para crear los enlaces <a>
-        var enlace = $('#accionAdministrativa'); // Creamos un elemento <a>
+        var enlace = $('#accionAdministrativa');
         var form = $('#formAccion')
         var btnAccionAdministrativa = $('#accionAdministrativa2')
 
-        // Verificamos la acción y configuramos los atributos asp-action y asp-controller adecuados
         if (accion === 'btnAsignarDescuento') {
             enlace.attr(
                 "href", "/Administracion/AsignarPromocion"  
@@ -54,39 +49,54 @@ $(document).ready(function() {
             
         }
 
-        // Agregamos el enlace creado al contenedor de usuarios seleccionados en el PopUpContainer
-        //$('#usuariosSeleccionadosContainer').append(enlace);
-
-        // Continuamos con el código original para mostrar el PopUpContainer
         if (accion === 'btnAsignarDescuento') {
             $('#popupTitle').text('Asignar Descuento');
         } else if (accion === 'btnAsignarPromocion') {
             $('#popupTitle').text('Asignar Promoción');
         }
 
-        // Limpia el contenido previo del PopUpContainer
         $('#usuariosSeleccionadosContainer').empty();
 
-        // Para cada usuario seleccionado, crea un div y agrega sus datos
         for (var i = 0; i < usuariosSeleccionados.length; i++) {
             var usuario = usuariosSeleccionados[i];
             var usuarioDiv = $('<div>').addClass('usuarioSeleccionado');
 
-
-            
-            //var inputId = $('<input>').attr('name', 'id').val(usuario.id);
             var labelNombre = $('<label>').text(usuario.nombre);
             var labelDNI = $('<label>').text(usuario.dni);
 
-            //usuarioDiv.append(inputId);
             usuarioDiv.append(labelNombre);
             usuarioDiv.append(labelDNI);
-            // Agrega los datos del usuario al nuevo div
-            //usuarioDiv.html('ID: ' + usuario.id + '<br>Nombre: ' + usuario.nombre + '<br>DNI: ' + usuario.dni);
 
-            // Agrega el nuevo div al contenedor de usuarios seleccionados en el PopUpContainer
             $('#usuariosSeleccionadosContainer').append(usuarioDiv);
+            
         }
+
+        fetch('/Administracion/ObtenerPromociones', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                var select = document.createElement('select');
+                select.id = 'nuevoSelect';
+                select.name = 'efectoId'
+        
+                data.forEach(promocion => {
+                    var optionElement = document.createElement('option');
+                    optionElement.value = promocion.id_promocion;
+                    optionElement.text = promocion.nombre_promocion;
+                    select.appendChild(optionElement);
+                });
+        
+                var usuariosSeleccionadosContainer = document.getElementById('usuariosSeleccionadosContainer');
+                usuariosSeleccionadosContainer.appendChild(select);
+            })
+            .catch(error => {
+                console.error('Error al obtener datos: ' + error);
+            });
+        
 
         $('#accionAdministrativa2').click(function (event) {
         
@@ -114,8 +124,6 @@ $(document).ready(function() {
         
         })
 
-
-        // Muestra el PopUpContainer
         $('#popUpContainer').show();
     });
 

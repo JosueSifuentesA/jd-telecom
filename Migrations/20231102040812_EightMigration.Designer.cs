@@ -3,6 +3,7 @@ using System;
 using JDTelecomunicaciones.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JDTelecomunicaciones.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231102040812_EightMigration")]
+    partial class EightMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -145,7 +148,12 @@ namespace JDTelecomunicaciones.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("usuarioid_usuario")
+                        .HasColumnType("integer");
+
                     b.HasKey("id_promocion");
+
+                    b.HasIndex("usuarioid_usuario");
 
                     b.ToTable("promocion");
                 });
@@ -276,9 +284,6 @@ namespace JDTelecomunicaciones.Migrations
                     b.Property<int>("personaid_persona")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("promocionesid_promocion")
-                        .HasColumnType("integer");
-
                     b.Property<char>("rol_usuario")
                         .HasColumnType("character(1)");
 
@@ -289,11 +294,20 @@ namespace JDTelecomunicaciones.Migrations
 
                     b.HasIndex("personaid_persona");
 
-                    b.HasIndex("promocionesid_promocion");
-
                     b.HasIndex("serviciosId_servicios");
 
                     b.ToTable("usuario");
+                });
+
+            modelBuilder.Entity("JDTelecomunicaciones.Models.Promocion", b =>
+                {
+                    b.HasOne("JDTelecomunicaciones.Models.Usuario", "usuario")
+                        .WithMany()
+                        .HasForeignKey("usuarioid_usuario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("usuario");
                 });
 
             modelBuilder.Entity("JDTelecomunicaciones.Models.Recibos", b =>
@@ -337,17 +351,11 @@ namespace JDTelecomunicaciones.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("JDTelecomunicaciones.Models.Promocion", "promociones")
-                        .WithMany()
-                        .HasForeignKey("promocionesid_promocion");
-
                     b.HasOne("JDTelecomunicaciones.Models.Servicios", "servicios")
                         .WithMany()
                         .HasForeignKey("serviciosId_servicios");
 
                     b.Navigation("persona");
-
-                    b.Navigation("promociones");
 
                     b.Navigation("servicios");
                 });
