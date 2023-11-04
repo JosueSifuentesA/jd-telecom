@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using JDTelecomunicaciones.Services;
+using JDTelecomunicaciones.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -37,6 +38,23 @@ namespace JDTelecomunicaciones.Controllers
             
         }
 
+        [HttpGet("BuscarTicketCompletado")]
+        public async Task<IActionResult> BuscarTicketCompletado(string ticketId){
+            
+            int intTicketId = int.Parse(ticketId);
+
+            var ticket = await _ticketService.GetTicketCompletedById(intTicketId);
+            List<Tickets> tickets = new List<Tickets>();
+            if(ticket != null){
+                tickets.Add(ticket);
+            }
+            Console.WriteLine(ticket + " - " + tickets.Count());
+            return View("TareasHechas",tickets);
+            
+        }
+
+
+
         [HttpGet("TareasHechas")]
         public async Task<IActionResult> TareasHechas(){
 
@@ -49,10 +67,23 @@ namespace JDTelecomunicaciones.Controllers
         public async Task<IActionResult> InformacionTicket(int idTicket){
 
             var ticket = await _ticketService.GetTicketById(idTicket);
-            ticket.status_ticket = "VISTO";
+            if(ticket.status_ticket != "REALIZADO"){
+                ticket.status_ticket = "VISTO";
+            }
             await _ticketService.EditTicket(idTicket,ticket);
             Console.WriteLine("SE ABRIO TICKETS" + ticket.status_ticket);
             return View("InformacionTicket",ticket);
+        }
+
+        [HttpGet("FiltrarTickets")]
+        public async Task<IActionResult> FiltrarTickets(string tipoTicket){
+
+            if(tipoTicket == "TODO") return RedirectToAction("Index");
+
+            var tickets = await _ticketService.GetTicketByType(tipoTicket);
+            
+            //Console.WriteLine("SE ABRIO TICKETS" + ticket.status_ticket);
+            return View("Index",tickets);
         }
 
         [HttpGet("MarcarTarea")]

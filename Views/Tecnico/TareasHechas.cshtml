@@ -13,28 +13,41 @@
     <section class="sectionContainer_handler">
         <h1>Tareas Hechas</h1>
         <h2>Tareas realizadas con exito</h2>
+        <form method="get" asp-controller="Tecnico" asp-action="BuscarTicketCompletado">
+            <input name="ticketId" type="text" placeholder="Numero del ticket"/>
+            <button>Buscar</button>
+        </form>
         <div class="ticketHandler">
-            @foreach(var ticket in tickets){
-                <div class="ticketHandler_ticket">
-                    <a class="ticket_DetailButton" asp-controller="Tecnico" asp-action="InformacionTicket" asp-route-idTicket="@ticket.id_ticket"><img src="~/img/lupa.png"></a>
-                    <label>JDTL-@ticket.id_ticket</label>
-                    <label>Fecha @ticket.fecha_ticket</label>
-                    <label class="ticket_problematica">@ticket.tipoProblematica_ticket</label>
-                        @if(ticket.status_ticket == "PENDIENTE"){
-                        <div class="ticketStatus" style="background: #FF5A5A" >
-                            <img src="~/img/pendiente.png" alt="Pendiente"/>
-                        </div>
+            @if(tickets.Count() >0){
+                @foreach(var ticket in tickets){
+                    <div class="ticketHandler_ticket">
+                        @if(ticket.id_ticket != null){
+                            <a class="ticket_DetailButton" asp-controller="Tecnico" asp-action="InformacionTicket" asp-route-idTicket="@ticket.id_ticket"><img src="~/img/lupa.png"></a>
 
-                        }else if(ticket.status_ticket == "VISTO"){
-                            <div class="ticketStatus" style="background: #FFA95A" >
-                                <img src="~/img/revision.png" alt="Revisado" style="background: #FFA95A" />
-                            </div>
                         }else{
-                            <div class="ticketStatus" style="background: #25D366">
-                                <img src="~/img/listo.png" alt="Listo" />
-                            </div>
+                            <a>Null</a>
                         }
-                </div>
+                        <label>JDTL-@ticket.id_ticket</label>
+                        <label>Fecha @ticket.fecha_ticket</label>
+                        <label class="ticket_problematica">@ticket.tipoProblematica_ticket</label>
+                            @if(ticket.status_ticket == "PENDIENTE"){
+                            <div class="ticketStatus" style="background: #FF5A5A" >
+                                <img src="~/img/pendiente.png" alt="Pendiente"/>
+                            </div>
+
+                            }else if(ticket.status_ticket == "VISTO"){
+                                <div class="ticketStatus" style="background: #FFA95A" >
+                                    <img src="~/img/revision.png" alt="Revisado" style="background: #FFA95A" />
+                                </div>
+                            }else{
+                                <div class="ticketStatus" style="background: #25D366">
+                                    <img src="~/img/listo.png" alt="Listo" />
+                                </div>
+                            }
+                    </div>
+                }
+            }else{
+                <h1>NO SE ENCONTRARON TICKETS COMPLETADOS</h1>
             }
         </div>
     </section>

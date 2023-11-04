@@ -64,3 +64,11 @@
     text-decoration: none;
     color: white;
 }
+
+.ticket_taskCompleted_active{
+    background-color: rgb(1, 151, 21);
+    padding: 5px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+}

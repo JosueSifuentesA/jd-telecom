@@ -14,6 +14,8 @@ namespace JDTelecomunicaciones.Services
         public Task AddTickets(Tickets ticket);
         public Task DeleteTicketById(int id);
         public Task EditTicket(int id,Tickets ticket);
+        public Task<Tickets> GetTicketCompletedById(int ticketId);
+        public Task<List<Tickets>> GetTicketByType(string tipoTicket);
 
     }
 }

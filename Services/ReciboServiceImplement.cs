@@ -96,40 +96,6 @@ namespace JDTelecomunicaciones.Services
             }
         }
 
-        /*public void GenerateVoucherPDF(string pdfName, Usuario usuario,Servicios servicio,Planes plan){
-            string rutaDescarga = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\Downloads\\" + pdfName +".pdf";
-            using (FileStream fs = new FileStream(rutaDescarga, FileMode.Create)){
-                Document doc = new Document(PageSize.A4);
-            PdfWriter writer = PdfWriter.GetInstance(doc, fs);
-            doc.Open();
-            BaseFont bf = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
-            Font font = new Font(bf, 12);
-            Persona persona = usuario.persona;
-            // Agregar contenido al PDF
-            doc.Add(new Paragraph("Recibo de Servicio", new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD)));
-            doc.Add(Chunk.NEWLINE);
-
-            doc.Add(new Paragraph("Nombre: " + persona.nombrePersona, font));
-            doc.Add(new Paragraph("Apellido Paterno: " + persona.apPatPersona, font));
-            doc.Add(new Paragraph("Apellido Materno: " + persona.apMatPersona, font));
-            doc.Add(new Paragraph("DNI: " + persona.dniPersona, font));
-            doc.Add(Chunk.NEWLINE);
-
-            doc.Add(new Paragraph("Fecha de Activación del Servicio: " + servicio.FechaActivacion_Servicio, font));
-            doc.Add(new Paragraph("Período de Facturación: " + servicio.PeriodoFacturacion_Servicio, font));
-            doc.Add(new Paragraph("Estado del Servicio: " + servicio.Estado_Servicio, font));
-            doc.Add(Chunk.NEWLINE);
-
-            doc.Add(new Paragraph("Detalles del Plan de Servicio:", new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD)));
-            doc.Add(new Paragraph("Nombre del Plan: " + plan.nombre_plan, font));
-            doc.Add(new Paragraph("Precio del Plan: " + plan.precio_plan.ToString("C"), font));
-            doc.Add(new Paragraph("Velocidad del Plan: " + plan.velocidad_plan + " Mbps", font));
-
-            doc.Close();
-            writer.Close();
-            }
-        }*/
-
         public byte[] GeneratePDFContent(Usuario usuario, Servicios servicio, Planes plan){
             using (MemoryStream memoryStream = new MemoryStream())
             {
@@ -141,12 +107,11 @@ namespace JDTelecomunicaciones.Services
                 Persona persona = usuario.persona;
 
                 string imagePath = Path.Combine(_hostingEnvironment.WebRootPath, "img/logo-jd.png");
-                iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance(imagePath); // Reemplaza con la ruta de tu logotipo
-                logo.SetAbsolutePosition(doc.Right - 100, doc.Top - 50); // Posición del logotipo en la esquina superior derecha
-                logo.ScaleAbsolute(120, 60); // Escala el logotipo según tus necesidades
+                iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance(imagePath);
+                logo.SetAbsolutePosition(doc.Right - 100, doc.Top - 50);
+                logo.ScaleAbsolute(120, 60); 
                 doc.Add(logo);
 
-                // Agregar contenido al PDF
                 doc.Add(new Paragraph("Recibo de Servicio", new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD)));
                 doc.Add(Chunk.NEWLINE);
 

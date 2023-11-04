@@ -56,11 +56,29 @@ namespace JDTelecomunicaciones.Services
 
     public async Task<Tickets> GetTicketById(int ticketId){
         var ticket = await _context.DB_Tickets
-                        .Include(t => t.usuario)          // Incluye la información del usuario relacionado al ticket
-                            .ThenInclude(u => u.persona)  // Incluye la información de la persona relacionada al usuario
+                        .Include(t => t.usuario)          
+                            .ThenInclude(u => u.persona) 
                         .Where(t => t.id_ticket == ticketId)
                         .FirstOrDefaultAsync();
         return ticket;
+    }
+
+    public async Task<Tickets> GetTicketCompletedById(int ticketId){
+        var ticket = await _context.DB_Tickets
+                        .Include(t => t.usuario)          
+                            .ThenInclude(u => u.persona)  
+                        .Where(t => t.id_ticket == ticketId && t.status_ticket == "REALIZADO")
+                        .FirstOrDefaultAsync();
+        return ticket;
+    }
+
+    public async Task<List<Tickets>> GetTicketByType(string tipoTicket){
+        var tickets = await _context.DB_Tickets
+                        .Include(t => t.usuario)          
+                            .ThenInclude(u => u.persona)  
+                        .Where(t=> t.status_ticket == tipoTicket)
+                        .ToListAsync();
+        return tickets;
     }
 
 
