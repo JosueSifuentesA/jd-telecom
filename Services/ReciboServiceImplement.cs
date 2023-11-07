@@ -54,6 +54,25 @@ namespace JDTelecomunicaciones.Services
             throw new NotImplementedException();
         }
 
+        public async Task<List<Recibos>> GetAllMontlyCompletedVouchers()
+        {
+            var recibos = await _context.DB_Recibos
+                .Include(r => r.usuario)
+                .Where(r => r.estado_recibo == "PAGADO")
+                .GroupBy(r => r.mes_recibo)
+                .Select(g => new Recibos
+                {
+                    mes_recibo = g.Key,
+                    monto_recibo = g.Sum(r => r.monto_recibo)
+                })
+                .OrderBy(r => r.mes_recibo)
+                .ToListAsync();
+
+            return recibos;
+        }
+
+
+
         public async Task<List<Recibos>> GetAllMonthlyUserVouchers(int userId, string mes)
         {
             var recibos = await _context.DB_Recibos.Include(r=>r.usuario).ToListAsync();

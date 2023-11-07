@@ -135,7 +135,8 @@ $(document).ready(function() {
    $('#btnVerRecibo').click(function (event) {
       event.preventDefault();
       $('.reciboCheckBox:checked').each(function () {
-          var idRecibo = $(this).next().text(); // Obtén el ID del recibo
+          var idRecibo = $(this).next().text();
+          console.log(idRecibo) // Obtén el ID del recibo
           var url = '/Cliente/DetalleRecibo?idRecibo=' + idRecibo;
           window.open(url, '_blank');
       });

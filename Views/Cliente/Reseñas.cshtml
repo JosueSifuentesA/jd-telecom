@@ -1,0 +1,97 @@
+@model List<JDTelecomunicaciones.Models.Reseña>;
+@{
+    Layout = "~/Views/Shared/_LayoutCliente.cshtml";
+    var reviews = Model; 
+    List<int> calificacionesUnicas = Model.Select(objeto => objeto.Calificacion).Distinct().ToList();
+    Dictionary<int, int> conteoCalificaciones = new Dictionary<int, int>();
+    foreach (int calificacion in calificacionesUnicas){
+        conteoCalificaciones[calificacion] = 0;
+    }   
+    foreach (var objeto in Model){
+        if (conteoCalificaciones.ContainsKey(objeto.Calificacion))
+        {
+            conteoCalificaciones[objeto.Calificacion]++;
+        }
+    }   
+        // Convertir el diccionario en un arreglo
+    int[] arregloConteo = new int[calificacionesUnicas.Count];
+    for (int i = 0; i < calificacionesUnicas.Count; i++){
+        int calificacion = calificacionesUnicas[i];
+        arregloConteo[i] = conteoCalificaciones[calificacion];
+    }   
+        // Imprimir la lista de calificaciones únicas y el arreglo de conteo
+        Console.WriteLine("Calificaciones Únicas: " + string.Join(", ", calificacionesUnicas));
+        Console.WriteLine("Arreglo de Conteo: " + string.Join(", ", arregloConteo));
+    
+}
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/reviews.css" asp-append-version="true" />
+
+}
+
+@section Scripts{
+    <script src="~/js/RecibosPagados.js"></script>
+}
+<section class="mainHandler">
+    <section class="mainSection">
+        <h1 class="title">Reseñas</h1>
+        <section class="mainSection_ReviewsController">
+            <div class="reviewAnaliticsContainer">
+                <img src="~/img/logo-jd.png"/>
+                <span>Promedio de calificaciones 4.84</span>
+            </div>
+            <div class="reviewStatusContainer">
+                <div class="reviewStatusContainer_handler">
+                    @for (int calificacion = 5; calificacion >= 1; calificacion--)
+                    {
+                        <div class="reviewStatusContainer_starStatus">
+                            <label>@calificacion estrellas</label>
+                            <div class="calificationContainer">
+                                @for (int i = 0; i < calificacion; i++)
+                                {
+                                    <img src="~/img/starIcon.svg" alt="Icono de una estrella" />
+                                }
+                            </div>
+                            <label class="starStatus_count">@(conteoCalificaciones.ContainsKey(calificacion) ? conteoCalificaciones[calificacion] : 0)</label>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+        <section class="mainSection_reviewcontainer">
+            <form asp-action="SubirReseña" asp-controller="Cliente" method="post">
+                <input name="Commentary" placeholder="Comentario..."/>
+                <select name="review">
+                    <option value="1">1 estrella</option>
+                    <option value="2">2 estrellas</option>
+                    <option value="3">3 estrellas</option>
+                    <option value="4">4 estrellas</option>
+                    <option value="5">5 estrellas</option>
+                </select>
+                <button>Enviar reseña</button>
+            </form>
+            <section class="reviewHandler">
+                @foreach(var review in reviews){
+                    <div class="reviewHandler_review">
+                        <div class="review_imgHandler">
+                            <img src="~/img/logo-jd.png" alt="Foto de perfil del usuario"/>
+                        </div>
+                        <div class="review_content">
+                            <div>
+                                <label class="content_userName">@review.Usuario.persona.nombrePersona @review.Usuario.persona.apPatPersona @review.Usuario.persona.apMatPersona</label>
+                                <!--<label>@review.FechaPublicacion</label>-->
+                            </div>
+                            <div class="review_calification">
+                                @for(int i = 0 ; i < review.Calificacion ; i++){
+                                    <img src="~/img/starIcon.svg" alt="Icono de una estrella"/>
+                                }
+                            </div>
+                            <span>@review.Contenido</span>
+                        </div>
+                    </div>
+                }
+            </section>
+        </section>
+    </section>
+</section>

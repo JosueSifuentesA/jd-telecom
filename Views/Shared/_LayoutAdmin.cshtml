@@ -61,12 +61,16 @@
           </a>
           <a asp-controller="Administracion" asp-action="ListaClientes"  class="optionsHandler_optionsMobile">
             <img src="~/img/ServiciosIconBlue.svg"/>
-            <label>Mis Planes</label>
+            <label>Clientes</label>
           </a>
           <a asp-controller="Administracion" asp-action="Promociones" class="optionsHandler_optionsMobile">
             <img src="~/img/TransactionsIconBlue.svg"/>
-            <label>Transacciones</label>
+            <label>Manejo de Promociones</label>
           </a>
+          <a asp-controller="Administracion" asp-action="Ganancias" class="optionsHandler_optionsMobile">
+          <img src="~/img/TransactionsIcon.svg"/>
+          <label>Reporte de Ganancias</label>
+        </a>
         </div>
       </div>
     </nav>
@@ -87,6 +91,10 @@
         <a asp-controller="Administracion" asp-action="Promociones" class="optionsHandler_option">
           <img src="~/img/TransactionsIcon.svg"/>
           <label>Manejo de Promociones</label>
+        </a>
+        <a asp-controller="Administracion" asp-action="Ganancias" class="optionsHandler_option">
+          <img src="~/img/TransactionsIcon.svg"/>
+          <label>Reporte de Ganancias</label>
         </a>
       </div>
     </section>

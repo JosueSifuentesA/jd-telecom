@@ -1,0 +1,67 @@
+@model JDTelecomunicaciones.Models.ModeloConListas<Usuario,Tickets>;
+
+@{
+    Layout = "~/Views/Shared/_LayoutCliente.cshtml";
+    var usuario = Model.ModeloT;
+    var tickets = Model.ModelosS;
+}
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/reviews.css" asp-append-version="true" />
+
+}
+
+@section Scripts{
+
+}
+
+<section>
+    <section>
+        <div>
+            <img src="~/img/logo-jd.png" alt="Foto de perfil del usuario"/>
+            <label>Jose Perales</label>
+        </div>  
+        <div>
+            <label>Cineguilla</label>
+            <label>Lima,Perú</label>
+            <label>17 Febrero</label>
+        </div>
+    </section>
+
+    <section>
+        <div>
+            <h2>Datos</h2>
+            <div>
+                <label>Nombre</label>
+                <label>@usuario.persona.nombrePersona @usuario.persona.apPatPersona @usuario.persona.apMatPersona</label>
+            </div>
+            <div>
+                <label>DNI</label>
+                <label>@usuario.nombre_usuario</label>
+            </div>
+            <div>
+                <label>Correo</label>
+                <label>@usuario.correo_usuario</label>
+            </div>
+        </div>
+        <div>
+            <h1>Mis Tickets atendidos</h1>
+            <table>
+                <thead>
+                    <th>Motivo</th>
+                    <th>Atendido por</th>
+                    <th>Fecha de atencion</th>
+                </thead>
+                <tbody>
+                    @foreach(var ticket in tickets){
+                        <tr>
+                            <td>@ticket.tipoProblematica_ticket</td>
+                            <td>Larry</td>
+                            <td>@ticket.fecha_ticket</td>
+                        </tr>
+                    }
+                </thead>
+            </table>
+        </div>
+    </section>
+</section>

@@ -2,8 +2,56 @@
   ViewData["Title"] = "Cobertura";
 }
 
+@section Styles{
+    <link rel="stylesheet" href="~/css/reviews.css" asp-append-version="true" />
+
+}
+
+@section Scripts{
+  <script>
+    $(document).ready(function() {
+  // Función para mostrar un mapa y ocultar los demás
+  function mostrarMapa(mapaId) {
+    $('.mapCoberturaContainer iframe').hide();
+    $('#' + mapaId).show();
+  }
+
+  // Manejar eventos de clic en los botones
+  $('#btnMapa1').click(function() {
+    mostrarMapa('NuestraCoberturaActual'); // Muestra el primer mapa
+  });
+
+  $('#btnMapa2').click(function() {
+    mostrarMapa('Mapa2'); // Muestra el segundo mapa
+  });
+
+  $('#btnMapa3').click(function() {
+    mostrarMapa('Mapa3'); // Muestra el tercer mapa
+  });
+
+  $('#btnMapa4').click(function() {
+    mostrarMapa('Mapa4'); // Muestra el cuarto mapa
+  });
+
+  mostrarMapa('NuestraCoberturaActual');
+});
+  </script>
+}
+
 <div class="cobertura" id="cobertura">
-  <h1>Nuestra zona de corbertura</h1>
-  <iframe src="https://www.google.com/maps/d/embed?mid=1bt4MSj3JECmkRa-byJSYNU3lF9tELWo&ehbc=2E312F" width="1000"
-    height="500"></iframe>
+  <h1>Nuestra zona de cobertura</h1>
+  <button id="btnMapa1">Cobertura Actual</button>
+  <button id="btnMapa3">Mapa 2</button>
+  <button id="btnMapa4">Mapa 3</button>
+  <div class="mapCoberturaContainer">
+
+    <iframe id="NuestraCoberturaActual" src="https://www.google.com/maps/d/embed?mid=1bt4MSj3JECmkRa-byJSYNU3lF9tELWo&ehbc=2E312F" width="1000"
+      height="500"></iframe>
+
+    <iframe style="display: none;" id="Mapa3" src="https://www.google.com/maps/d/embed?mid=1zVtiB3FrFsd0LEwev3T8V6aSo-ic-LY&ehbc=2E312F"  width="1000"
+      height="500"></iframe>
+
+    <iframe style="display: none;" id="Mapa4" src="https://www.google.com/maps/d/embed?mid=1Fo_9B3ktjOJSCG4949lRY_pyIeHFZ1I&ehbc=2E312F" width="1000"
+      height="500"></iframe>
+  </div>
 </div>

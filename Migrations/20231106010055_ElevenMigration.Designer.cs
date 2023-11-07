@@ -3,6 +3,7 @@ using System;
 using JDTelecomunicaciones.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JDTelecomunicaciones.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231106010055_ElevenMigration")]
+    partial class ElevenMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -188,36 +191,6 @@ namespace JDTelecomunicaciones.Migrations
                     b.ToTable("recibo");
                 });
 
-            modelBuilder.Entity("JDTelecomunicaciones.Models.Reclamacion", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id_reclamacion");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Contenido")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("FechaPublicacion")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("TipoReclamacion")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UsuarioId");
-
-                    b.ToTable("Reclamaciones");
-                });
-
             modelBuilder.Entity("JDTelecomunicaciones.Models.Reseña", b =>
                 {
                     b.Property<int>("Id")
@@ -364,17 +337,6 @@ namespace JDTelecomunicaciones.Migrations
                         .IsRequired();
 
                     b.Navigation("usuario");
-                });
-
-            modelBuilder.Entity("JDTelecomunicaciones.Models.Reclamacion", b =>
-                {
-                    b.HasOne("JDTelecomunicaciones.Models.Usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("JDTelecomunicaciones.Models.Reseña", b =>

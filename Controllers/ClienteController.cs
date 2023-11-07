@@ -26,8 +26,9 @@ namespace JDTelecomunicaciones.Controllers
         private readonly PlanesServiceImplement _planService;
         private readonly MercadoPagoServiceImplement _mercadoPagoService;
         private readonly ServicioServiceImplement _servicioService;
+        private readonly ReseñaServiceImplement _reseñaService;
 
-        public ClienteController(ServicioServiceImplement servicioService,PlanesServiceImplement planService,TicketServiceImplement ticketService,UsuarioServiceImplement usuarioService,ReciboServiceImplement reciboService,ApplicationDbContext context , MercadoPagoServiceImplement mercadoPagoService)
+        public ClienteController(ServicioServiceImplement servicioService,PlanesServiceImplement planService,TicketServiceImplement ticketService,UsuarioServiceImplement usuarioService,ReciboServiceImplement reciboService,ApplicationDbContext context , MercadoPagoServiceImplement mercadoPagoService,ReseñaServiceImplement reseñaService)
         {
             _ticketService = ticketService;
             _usuarioService = usuarioService;
@@ -35,6 +36,7 @@ namespace JDTelecomunicaciones.Controllers
             _planService = planService;
             _mercadoPagoService = mercadoPagoService;
             _servicioService = servicioService;
+            _reseñaService = reseñaService;
 
             _context = context;
         }
@@ -325,6 +327,34 @@ namespace JDTelecomunicaciones.Controllers
 
         }
 
+        [Authorize(Roles ="C")]
+        [HttpGet("Reseñas")]
+        public async Task<IActionResult> Reseñas(){
+            var reseñas = await _reseñaService.GetAllReviews();
+            return View("Reseñas",reseñas);
+        }
+
+        [Authorize(Roles ="C")]
+        [HttpPost("SubirReseña")]
+        public async Task<IActionResult> SubirReseña(string Commentary,string review){
+
+            var idUserClaim =  User.FindFirst("idUser")?.Value;
+            int idUser = int.Parse(idUserClaim);
+            var usuario = _usuarioService.FindUserById(idUser).Result;
+            if(usuario != null){
+                Reseña miReseña = new(){
+                    Calificacion = int.Parse(review),
+                    FechaPublicacion = DateTime.Now.ToUniversalTime(),
+                    UsuarioId = idUser,
+                    Usuario = usuario,
+                    Contenido = Commentary
+                };
+                await _reseñaService.AddReview(miReseña);
+            }else{
+                return BadRequest();
+            }
+            return RedirectToAction("Reseñas");
+        }
 
         [Authorize(Roles ="C")] 
         [HttpPost("/process_payment")]
@@ -354,7 +384,7 @@ namespace JDTelecomunicaciones.Controllers
              
         }
 
-        [Authorize(Roles ="C")] //Añadido recientemente
+        [Authorize(Roles ="C")]
         [HttpPost("/pagar_recibos")]
         public async Task<IActionResult> pagar_recibos(dynamic transaccion , int[] recibos){
             using (var reader = new StreamReader(Request.Body))
@@ -373,6 +403,80 @@ namespace JDTelecomunicaciones.Controllers
             }
         }
 
+
+        [Authorize(Roles ="C")]
+        [HttpGet("Reclamacion")]
+        public async Task<IActionResult> Reclamacion(){
+            var idUserClaim =  User.FindFirst("idUser")?.Value;
+            int idUser = int.Parse(idUserClaim);
+            var usuario = _usuarioService.FindUserById(idUser).Result;
+            if(usuario != null){
+                return View("Reclamaciones",usuario);
+            }else{
+                return BadRequest();
+            }
+        }
+
+        [Authorize(Roles ="C")]
+        [HttpGet("PerfilCliente")]
+        public async Task<IActionResult> PerfilCliente(){
+            var idUserClaim =  User.FindFirst("idUser")?.Value;
+            int idUser = int.Parse(idUserClaim);
+            var usuario = _usuarioService.FindUserById(idUser).Result;
+            var tickets = await _context.DB_Tickets.Include(t=> t.usuario).Where(t=>t.usuario.id_usuario == idUser && t.status_ticket == "REALIZADO").ToListAsync();
+            if(usuario != null && tickets !=null){
+                ModeloConListas<Usuario,Tickets> miModelo = new ModeloConListas<Usuario, Tickets>(){
+                    ModeloT = usuario,
+                    ModelosS = tickets
+                };
+                return View("PerfilCliente",miModelo);
+            }else{
+                return BadRequest();
+            }
+        }
+
+        [Authorize(Roles ="C")]
+        [HttpPost("EditarDatosCliente")]
+        public async Task<IActionResult> EditarDatosCliente(){
+            var idUserClaim =  User.FindFirst("idUser")?.Value;
+            int idUser = int.Parse(idUserClaim);
+            var usuario = _usuarioService.FindUserById(idUser).Result;
+            if(usuario != null){
+                return RedirectToAction("PerfilCliente");
+            }else{
+                return BadRequest();
+            }
+        }
+
+        [Authorize(Roles ="C")]
+        [HttpPost("SubirReclamacion")]
+        public async Task<IActionResult> SubirReclamacion(string message,string reclamationType){
+            var idUserClaim =  User.FindFirst("idUser")?.Value;
+            int idUser = int.Parse(idUserClaim);
+            var usuario = _usuarioService.FindUserById(idUser).Result;
+            if(usuario != null){
+
+                Reclamacion miReclamacion = new Reclamacion(){
+                    Contenido = message ,
+                    TipoReclamacion = reclamationType,
+                    FechaPublicacion = DateTime.Today.ToLocalTime(),
+                    UsuarioId = idUser,
+                    Usuario = usuario,
+                };
+
+                try{
+                    await _context.DB_Reclamaciones.AddAsync(miReclamacion);
+                    await _context.SaveChangesAsync();
+                }catch(Exception e){
+                    return BadRequest(e);
+                }
+                return RedirectToAction("Reclamacion");
+            }else{
+                return BadRequest("No se encontro un usuario");
+            }
+        }
+
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
@@ -380,7 +484,5 @@ namespace JDTelecomunicaciones.Controllers
         }
     }
 
-    internal class ModeloConListas
-    {
-    }
+
 }

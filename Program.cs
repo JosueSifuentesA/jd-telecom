@@ -29,6 +29,7 @@ builder.Services.AddScoped<ServicesFactory>();
 builder.Services.AddScoped<UsuarioServiceImplement>();
 builder.Services.AddScoped<PromocionServiceImplement>();
 builder.Services.AddScoped<MercadoPagoServiceImplement>();
+builder.Services.AddScoped<ReseñaServiceImplement>();
 builder.Services.AddScoped<ReciboServiceImplement>();
 builder.Services.AddScoped<PlanesServiceImplement>();
 builder.Services.AddScoped<ServicioServiceImplement>();

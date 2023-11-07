@@ -1,0 +1,34 @@
+@model JDTelecomunicaciones.Models.Usuario;
+@{
+    Layout = "~/Views/Shared/_LayoutCliente.cshtml";
+    
+}
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/reviews.css" asp-append-version="true" />
+
+}
+
+@section Scripts{
+
+}
+<section>
+    <h1>Libro de reclamaciones</h1>
+    <form asp-action="SubirReclamacion" asp-controller="Cliente" method="POST">
+        <div>
+            <input value=@Model.persona.nombrePersona type="text" placeholder="Nombre" readonly/>
+            <input value=@Model.persona.apPatPersona @Model.persona.apMatPersona type="text" placeholder="Apellidos" readonly/>
+        </div>
+        <select name="reclamationType">
+            <option>Velocidad y calidad de conexión</option>
+            <option>Facturación incorrecta</option>
+            <option>Otros</option>
+        </select>
+        <div>
+            <label>Mensaje</label>
+            <textarea name="message" placeholder="Ingrese su reclamacion aquí"></textarea>
+        </div>
+        <button type="submit">Enviar reclamacion</button>
+        <button id="Download">Descargar PDF</button>
+    </form>
+</section>

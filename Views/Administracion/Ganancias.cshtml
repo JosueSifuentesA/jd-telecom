@@ -1,0 +1,54 @@
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml"; 
+}
+
+@section Scripts{
+     <script src="~/js/GestionGanancias.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+}
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/listaClientes.css" asp-append-version="true" />
+    <style>
+        .GananciasContainer{
+            width: 100%;
+            display: flex;
+            padding: 20px;
+        }
+
+        .GananciasContainer_dataHandler{
+            width: 100%;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            overflow: auto;
+            gap:20px;
+        }
+
+        #graficaRecibosPagadosPorMes{
+            width: 100%;
+            align-self: center;
+            align-self: center;
+            max-height: 80%;
+            max-width: 80%;
+        }
+    </style>
+}
+<section class="GananciasContainer">
+    <section class="GananciasContainer_dataHandler">
+        <h1>Ganancias</h1>
+        <div>
+            <button id="pieChartButton">Gráfico de Pastel</button>
+            <button id="barChartButton">Gráfico de Barras</button>
+            <button id="lineChartButton">Gráfico de Líneas</button>
+        </div>
+
+        <canvas id="pieChart" style="display: none;"></canvas>
+        <canvas id="barChart" style="display: none;"></canvas>
+        <canvas id="lineChart" style="display: none;"></canvas>
+        <canvas id="graficaRecibosPagadosPorMes"></canvas>
+    </section>
+</section>

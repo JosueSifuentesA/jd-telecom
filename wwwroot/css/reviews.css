@@ -1,0 +1,134 @@
+main{
+    height: max-content;
+}
+
+.mainSection{
+    padding: 20px;
+    overflow: auto;
+    display: flex;
+    flex-flow: column;
+    gap: 20px;
+}
+
+.title{
+    color: #0061FF;
+    font-size: 32px;
+}
+
+.mainHandler{
+    background-color: white;
+    margin: 10px auto;
+    border-radius: 10px;
+    width: 80%;
+}
+
+.reviewStatusContainer{
+    display: flex;
+    flex-flow: column;
+}
+
+.calificationContainer{
+    width: 120px;
+}
+
+.reviewAnaliticsContainer{
+    display: flex;
+    align-items: center;
+    width: 40%;
+    gap: 20px;
+}
+
+.reviewAnaliticsContainer img{
+    width: 70px;
+}
+
+.mainSection_ReviewsController{
+    display: flex;
+    background-color: #f3f3f3;
+    padding: 20px;
+    justify-content: space-between;
+    border-radius: 20px;
+}
+
+.starStatus_count{
+    width: 10px;
+    text-align: center;
+    background-color: aqua;
+    padding: 5px 10px;
+    border-radius: 50%;
+}
+
+.reviewStatusContainer_handler{
+    display: flex;
+    flex-flow: column;
+    gap: 20px;
+    width: min-content;
+}
+
+.reviewStatusContainer_starStatus{
+    width: 250px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.reviewStatusContainer_starStatus img{
+    width: 20px;
+}
+
+.mainSection_container{
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.reviewHandler{
+    padding: 10px;
+    display: flex;
+    flex-flow: column;
+    gap: 20px;
+}
+
+.reviewHandler_review{
+    display: flex;
+    gap: 20px;
+    background-color: #f3f3f3;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px gray;
+    align-items: center;
+}
+
+.review_imgHandler img{
+    width: 50px;
+}
+
+.review img{
+    width: 100%;
+}
+
+.review_content{
+
+}
+
+.content_userName{
+    font-weight: 600;
+}
+
+.review_calification{
+    display: flex;
+}
+
+.review_calification img{
+    width: 20px;
+}
+
+@media(max-width:850px){
+    .mainSection_ReviewsController{
+        flex-flow: column;
+        gap: 10px;
+        align-items: center;
+    }
+    .reviewAnaliticsContainer{
+        justify-content: center;
+    }
+}

@@ -21,12 +21,14 @@ namespace JDTelecomunicaciones.Controllers
         private readonly UsuarioServiceImplement _usuarioService;
         private readonly PromocionServiceImplement _promocionService;
         private readonly ApplicationDbContext _context;
+        private readonly ReciboServiceImplement _recibosService;
 
-        public AdministracionController(PromocionServiceImplement promocionService,ApplicationDbContext context,ILogger<AdministracionController> logger,UsuarioServiceImplement usuarioService){
+        public AdministracionController(ReciboServiceImplement recibosService,PromocionServiceImplement promocionService,ApplicationDbContext context,ILogger<AdministracionController> logger,UsuarioServiceImplement usuarioService){
             _logger = logger;
             _usuarioService = usuarioService;
             _context = context;
             _promocionService=promocionService;
+            _recibosService= recibosService;
         }
 
         [HttpGet("Index")]
@@ -36,6 +38,18 @@ namespace JDTelecomunicaciones.Controllers
             return View("Index",promociones);
         }
 
+        [HttpGet("GetAllMontlyCompletedVouchers")]
+        public async Task<IActionResult> GetAllMontlyCompletedVouchers(){
+            var recibos = await _recibosService.GetAllMontlyCompletedVouchers();
+            return Json(recibos);
+        }
+
+        [HttpGet("Ganancias")]
+        public IActionResult Ganancias(){
+            //var recibos = await _recibosService.GetAllMontlyCompletedVouchers();
+            return View("Ganancias");
+        }
+        
         [HttpGet("ListaClientes")]
         public async Task<IActionResult> ListaClientes(){
             var users = await _usuarioService.GetClientUsers();
