@@ -86,9 +86,17 @@
           <label>Servicio Tecnico</label>
         </a>
         <a asp-controller="Cliente" asp-action="Reseñas" class="optionsHandler_option">
-            <img src="~/img/TechServiceIconBlue.svg"/>
+            <img src="~/img/TechServiceIcon.svg"/>
             <label>Reseñas</label>
           </a>
+        <a asp-controller="Cliente" asp-action="Reclamacion" class="optionsHandler_option">
+            <img src="~/img/TechServiceIcon.svg"/>
+            <label>Reclamacion</label>
+        </a>
+        <a asp-controller="Cliente" asp-action="PerfilCliente" class="optionsHandler_option">
+            <img src="~/img/TechServiceIcon.svg"/>
+            <label>Ver Perfil</label>
+        </a>
       </div>
     </section>
     @RenderBody()
