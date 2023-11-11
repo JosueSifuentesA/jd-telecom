@@ -10,7 +10,8 @@ using Microsoft.Extensions.Logging;
 using JDTelecomunicaciones.Models;
 using JDTelecomunicaciones.Data;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.Authorization;
+using System.Globalization;
 
 namespace JDTelecomunicaciones.Controllers
 {
@@ -22,12 +23,14 @@ namespace JDTelecomunicaciones.Controllers
         private readonly PromocionServiceImplement _promocionService;
         private readonly ApplicationDbContext _context;
         private readonly ReciboServiceImplement _recibosService;
+        private readonly ReseñaServiceImplement _reseñaService;
 
-        public AdministracionController(ReciboServiceImplement recibosService,PromocionServiceImplement promocionService,ApplicationDbContext context,ILogger<AdministracionController> logger,UsuarioServiceImplement usuarioService){
+        public AdministracionController(ReseñaServiceImplement reseñaService,ReciboServiceImplement recibosService,PromocionServiceImplement promocionService,ApplicationDbContext context,ILogger<AdministracionController> logger,UsuarioServiceImplement usuarioService){
             _logger = logger;
             _usuarioService = usuarioService;
             _context = context;
             _promocionService=promocionService;
+            _reseñaService=reseñaService;
             _recibosService= recibosService;
         }
 
@@ -42,6 +45,107 @@ namespace JDTelecomunicaciones.Controllers
         public async Task<IActionResult> GetAllMontlyCompletedVouchers(){
             var recibos = await _recibosService.GetAllMontlyCompletedVouchers();
             return Json(recibos);
+        }
+
+
+        //[HttpGet("GetYearlyCompletedTickets")]
+        /*public async Task<IActionResult> GetYearlyCompletedTickets()
+        {
+            var yearlyTickets = await _context.DB_Tickets
+                .Where(t => t.status_ticket == "REALIZADO" && t.fecha_ticket != null)
+                .GroupBy(t => DateTime.Parse(t.fecha_ticket).Year)
+                .Select(group => new { Year = group.Key, TotalTickets = group.Count() })
+                .ToListAsync();
+
+            return Json(yearlyTickets);
+        }
+        */
+        
+        /*[HttpGet("GetYearlyCompletedTickets")]
+        public async Task<IActionResult> GetYearlyCompletedTickets()
+        {
+            var yearlyTickets = await _context.DB_Tickets
+                .Where(t => t.status_ticket == "REALIZADO" && t.fecha_ticket != null)
+                .Select(t => new
+                {
+                    Year = DateTime.ParseExact(t.fecha_ticket, "yyyy/MM/dd", CultureInfo.InvariantCulture).Year,
+                    Ticket = t
+                })
+                .GroupBy(t => t.Year)
+                .Select(group => new { Year = group.Key, TotalTickets = group.Count() })
+                .ToListAsync();
+
+            return Json(yearlyTickets);
+        }
+        */
+
+        [HttpGet("GetYearlyCompletedTickets")]
+        public async Task<IActionResult> GetYearlyCompletedTickets()
+        {
+            var yearlyTickets = await _context.DB_Tickets
+                .Where(t => t.status_ticket == "REALIZADO" && t.fecha_ticket != null)
+                .GroupBy(t => t.fecha_ticket.Year)
+                .Select(group => new { Year = group.Key, TotalTickets = group.Count() })
+                .ToListAsync();
+
+            return Json(yearlyTickets);
+        }
+
+
+        [HttpGet("GetMonthlyCompletedTickets")]
+        public async Task<IActionResult> GetMonthlyCompletedTickets()
+        {
+            var monthlyTickets = await _context.DB_Tickets
+                .Where(t => t.status_ticket == "REALIZADO" && t.fecha_ticket != null)
+                .GroupBy(t => new { Year = t.fecha_ticket.Year, Month = t.fecha_ticket.Month })
+                .Select(group => new
+                {
+                    Year = group.Key.Year,
+                    Month = group.Key.Month,
+                    TotalTickets = group.Count()
+                })
+                .ToListAsync();
+
+            return Json(monthlyTickets);
+        }
+
+
+
+        [Authorize(Roles ="A")]
+        [HttpGet("GetAllReviewsByPlan")]
+        public async Task<IActionResult> GetAllReviewsByPlan(){
+            var reseñas = await _context.DB_Planes
+                .Select(plan => new
+                {
+                    PlanId = plan.id,
+                    NombrePlan = plan.nombre_plan,
+                    ReseñasPositivas = _context.DB_Reseñas
+                        .Count(reseña => reseña.PlanReseña.id == plan.id && reseña.Calificacion >= 3 && reseña.Calificacion <= 5)
+                })
+                .ToListAsync();
+            return Json(reseñas);
+        }
+        
+
+        [Authorize(Roles ="A")]
+        [HttpGet("InformeDesempeño")]
+        public async Task<IActionResult> InformeDesempeño(){
+            return View("InformeDesempeño");
+        }
+
+        [Authorize(Roles ="A")]
+        [HttpGet("GetAllComplaints")]
+        public async Task<IActionResult> GetAllComplaints(){
+           var reclamacionesPorMes = await _context.DB_Reclamaciones
+                .GroupBy(reclamacion => new { Mes = reclamacion.FechaPublicacion.Month, Año = reclamacion.FechaPublicacion.Year })
+                .Select(grupo => new
+                {
+                    Mes = grupo.Key.Mes,
+                    Año = grupo.Key.Año,
+                    CantidadReclamaciones = grupo.Count()
+                })
+                .ToListAsync();
+            return Json(reclamacionesPorMes);
         }
 
         [HttpGet("Ganancias")]

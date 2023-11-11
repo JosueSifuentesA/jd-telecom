@@ -1,0 +1,45 @@
+@model List<JDTelecomunicaciones.Models.Tickets>;
+@{
+    Layout = "~/Views/Shared/_LayoutTecnico.cshtml";
+    var tickets = Model;
+    Console.WriteLine(Model.Count());
+    //var usuario = Model.usuario;
+    //var persona = Model.usuario.persona;
+}
+
+<section>
+    <section>
+        <img alt="Imagen de perfil del personal tecnico"/>
+        <div>
+            <label>Tecnico</label>
+            <label>Benito Perez</label>
+            <a>Ver estadisticas</a>
+        </div>
+    </section>
+
+    <section>
+        <div>
+            <div>
+                <h2>Sobre él / ella</h1>
+            </div>
+            <div>
+                <h2>Otra cosa</h1>
+            </div>
+        </div>
+        <div>
+            <div>
+                <label>Tareas Cumplidas</label>
+            </div>
+            <div class="ticketHandler">
+                
+                @foreach(var ticket in tickets){
+                    <div>
+                        <a class="ticket_DetailButton" asp-controller="Tecnico" asp-action="InformacionTicket" asp-route-idTicket="@ticket.id_ticket"><img src="~/img/lupa.png"></a>
+                        <label>@ticket.tipoProblematica_ticket</label>
+                        <img alt="checkIcon"/>
+                    </div>
+                }               
+            </div>
+        </div>
+    </section>
+</section>

@@ -72,6 +72,19 @@ namespace JDTelecomunicaciones.Services
         return ticket;
     }
 
+    public async Task<List<Tickets>> GetTicketCompletedByUserId(int userId){
+        Console.WriteLine(userId);
+        var tickets = await _context.DB_Tickets
+                            .Include(t => t.usuario)          
+                                .ThenInclude(u => u.persona)  
+                            .Where(t => t.tecnicoDesignado.id_usuario == userId && t.status_ticket == "REALIZADO")
+                            .ToListAsync();
+        return tickets;
+    }
+
+
+
+
     public async Task<List<Tickets>> GetTicketByType(string tipoTicket){
         var tickets = await _context.DB_Tickets
                         .Include(t => t.usuario)          
@@ -102,6 +115,7 @@ namespace JDTelecomunicaciones.Services
                 ticketToChange.fecha_ticket = ticket.fecha_ticket;
                 ticketToChange.status_ticket = ticket.status_ticket;
                 ticketToChange.tipoProblematica_ticket = ticket.tipoProblematica_ticket;
+                ticketToChange.tecnicoDesignado = ticket.tecnicoDesignado;
                 await _context.SaveChangesAsync();
             }
         }catch(Exception e){

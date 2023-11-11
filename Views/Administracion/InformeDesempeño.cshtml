@@ -1,0 +1,29 @@
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml"; 
+}
+
+@section Scripts{
+     <script src="~/js/GestionInformeDesempeño.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+}
+
+<section>
+    <section>
+        <form id="filtroForm">
+            <select name="periodoInforme">
+                <option value="Mensual">Mensual</option>
+                <option value="Anual">Anual</option>
+            </select>
+            <button id="filtrarBtn">Filtrar <img src="~/img/SearchIcon.svg"/></button>
+        </form>
+        <div>
+            <div>
+                <canvas id="graficaMensual"></canvas>
+                <canvas id="graficaAnual"></canvas>
+            </div>
+            <div>
+                <button id="exportarPdfBtn">Exportar PDF</button>
+            </div>
+        </div>
+    </section>
+</section>

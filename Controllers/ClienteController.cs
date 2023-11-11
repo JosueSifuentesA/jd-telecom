@@ -184,7 +184,7 @@ namespace JDTelecomunicaciones.Controllers
             int idUser = int.Parse(idUserClaim);
             var miUsuario = await _usuarioService.FindUserById(idUser);
 
-            var ticket = new Tickets{ tipoProblematica_ticket = tipoProblematica,descripcion_ticket = descripcion,status_ticket = "PENDIENTE",usuario =miUsuario ,fecha_ticket = fechaActualS};
+            var ticket = new Tickets{ tipoProblematica_ticket = tipoProblematica,descripcion_ticket = descripcion,status_ticket = "PENDIENTE",usuario =miUsuario ,fecha_ticket = DateTime.Today.ToUniversalTime()};
             _ticketService.AddTickets(ticket);
             return RedirectToAction("ServicioTecnico");
         }
@@ -334,6 +334,7 @@ namespace JDTelecomunicaciones.Controllers
             return View("Reseñas",reseñas);
         }
 
+
         [Authorize(Roles ="C")]
         [HttpPost("SubirReseña")]
         public async Task<IActionResult> SubirReseña(string Commentary,string review){
@@ -341,13 +342,21 @@ namespace JDTelecomunicaciones.Controllers
             var idUserClaim =  User.FindFirst("idUser")?.Value;
             int idUser = int.Parse(idUserClaim);
             var usuario = _usuarioService.FindUserById(idUser).Result;
+            var servicioConPlan = _context.DB_Usuarios
+                .Where(u => u.id_usuario == idUser)
+                .Include(u => u.servicios)
+                    .ThenInclude(s => s.Plan_Servicio)
+                .Select(u => u.servicios)
+                .FirstOrDefault();
+
             if(usuario != null){
                 Reseña miReseña = new(){
                     Calificacion = int.Parse(review),
                     FechaPublicacion = DateTime.Now.ToUniversalTime(),
                     UsuarioId = idUser,
                     Usuario = usuario,
-                    Contenido = Commentary
+                    Contenido = Commentary,
+                    PlanReseña = servicioConPlan.Plan_Servicio
                 };
                 await _reseñaService.AddReview(miReseña);
             }else{
@@ -459,7 +468,7 @@ namespace JDTelecomunicaciones.Controllers
                 Reclamacion miReclamacion = new Reclamacion(){
                     Contenido = message ,
                     TipoReclamacion = reclamationType,
-                    FechaPublicacion = DateTime.Today.ToLocalTime(),
+                    FechaPublicacion = DateTime.Today.ToUniversalTime(),
                     UsuarioId = idUser,
                     Usuario = usuario,
                 };

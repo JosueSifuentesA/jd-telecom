@@ -17,10 +17,13 @@ namespace JDTelecomunicaciones.Models
         public string tipoProblematica_ticket {get;set;}
         public string? descripcion_ticket {get;set;}
         public string status_ticket {get;set;}
-        public string fecha_ticket {get;set;}
+        public DateTime fecha_ticket {get;set;}
          
-        [Column("id_usuario")]
+        [Column("id_cliente")]
         public Usuario usuario {get;set;}
+
+        [Column("id_tecnico")]
+        public Usuario? tecnicoDesignado {get;set;}
     
     }
 }

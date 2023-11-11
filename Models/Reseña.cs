@@ -21,6 +21,8 @@ namespace JDTelecomunicaciones.Models
         public DateTime FechaPublicacion { get; set; }
         public int UsuarioId { get; set; }
         public Usuario Usuario { get; set; }
+
+        public Planes PlanReseña { get; set; }
     
     }
 }

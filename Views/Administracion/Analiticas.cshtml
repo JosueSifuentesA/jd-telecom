@@ -1,0 +1,25 @@
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml"; 
+}
+
+@section Scripts{
+     <script src="~/js/GestionAnaliticasClientes.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+}
+<section>
+    <section>
+        <h1>Analiticas</h1>
+        <div>
+            <h2>Clientes felices con nuestros planes</h2>
+            <button id="mostrarBtn">Mostrar</button>
+            <select id="tipoGrafico">
+                <option value="clientesFelices">Mostrar Clientes Felices con sus planes</option>
+                <option value="reclamosMes">Mostrar Reclamos al Mes</option>
+            </select>
+        </div>
+        <div>
+            <canvas id="graficaClientesFelices"></canvas>
+            <canvas id="graficaReclamosMes"></canvas>
+        </div>
+    </section>
+</section>

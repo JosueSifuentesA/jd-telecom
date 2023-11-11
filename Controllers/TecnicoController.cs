@@ -15,10 +15,12 @@ namespace JDTelecomunicaciones.Controllers
     {
         private readonly ILogger<TecnicoController> _logger;
         private readonly TicketServiceImplement _ticketService;
-        public TecnicoController(ILogger<TecnicoController> logger,TicketServiceImplement ticketService)
+         private readonly UsuarioServiceImplement _usuarioService;
+        public TecnicoController(UsuarioServiceImplement usuarioService, ILogger<TecnicoController> logger,TicketServiceImplement ticketService)
         {
             _ticketService = ticketService;
             _logger = logger;
+            _usuarioService = usuarioService;
         }
 
         [HttpGet("Index")]
@@ -86,11 +88,27 @@ namespace JDTelecomunicaciones.Controllers
             return View("Index",tickets);
         }
 
+        //[Authorize(Roles ="A")]
+        [HttpGet("PerfilTecnico")]
+        public async Task<IActionResult> PerfilTecnico(){
+            var idUserClaim =  User.FindFirst("idUser")?.Value;
+            int idUser = int.Parse(idUserClaim);
+            Console.WriteLine($"ID USUARIO:{idUser}");
+            var ticketsResueltos = await _ticketService.GetTicketCompletedByUserId(idUser);
+            return View("PerfilTecnico",ticketsResueltos);
+        }
+
+
         [HttpGet("MarcarTarea")]
         public async Task<IActionResult> MarcarTarea(int idTicket){
+            
+            var idUserClaim =  User.FindFirst("idUser")?.Value;
+            int idUser = int.Parse(idUserClaim);
+            var usuario = _usuarioService.FindUserById(idUser).Result;
 
             var ticket = await _ticketService.GetTicketById(idTicket);
             ticket.status_ticket ="REALIZADO" ;
+            ticket.tecnicoDesignado = usuario;
             await _ticketService.EditTicket(idTicket,ticket);
             return RedirectToAction("TareasHechas");
         }

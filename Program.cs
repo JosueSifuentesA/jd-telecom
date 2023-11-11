@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using DotNetEnv;
 using JDTelecomunicaciones.Services;
 using JDTelecomunicaciones.Models;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
 //using Rotativa
 
 Env.Load();
@@ -37,6 +40,12 @@ builder.Services.AddHostedService<ReciboHostedService>();
 //builder.Services.AddScoped<PersonaServiceImplement>();
 //builder.Services.AddScoped<ProductoServiceImplement>();
 //builder.Services.AddScoped<CategoriaServiceImplement>();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+});
+
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
