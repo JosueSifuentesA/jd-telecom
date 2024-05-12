@@ -342,6 +342,7 @@ namespace JDTelecomunicaciones.Controllers
             var idUserClaim =  User.FindFirst("idUser")?.Value;
             int idUser = int.Parse(idUserClaim);
             var usuario = _usuarioService.FindUserById(idUser).Result;
+            Console.WriteLine(usuario);
             var servicioConPlan = _context.DB_Usuarios
                 .Where(u => u.id_usuario == idUser)
                 .Include(u => u.servicios)
@@ -350,9 +351,10 @@ namespace JDTelecomunicaciones.Controllers
                 .FirstOrDefault();
 
             if(usuario != null){
-                Reseña miReseña = new(){
+                var miReseña = new Reseña
+                {
                     Calificacion = int.Parse(review),
-                    FechaPublicacion = DateTime.Now.ToUniversalTime(),
+                    FechaPublicacion = DateTime.UtcNow,
                     UsuarioId = idUser,
                     Usuario = usuario,
                     Contenido = Commentary,

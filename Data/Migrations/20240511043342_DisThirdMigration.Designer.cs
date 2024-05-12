@@ -3,17 +3,20 @@ using System;
 using JDTelecomunicaciones.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace JDTelecomunicaciones.Migrations
+namespace JDTelecomunicaciones.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240511043342_DisThirdMigration")]
+    partial class DisThirdMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -294,8 +297,8 @@ namespace JDTelecomunicaciones.Migrations
                     b.Property<string>("descripcion_ticket")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("fecha_ticket")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<DateTimeOffset>("fecha_ticket")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("status_ticket")
                         .IsRequired()

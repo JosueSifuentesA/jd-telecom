@@ -17,6 +17,8 @@ namespace JDTelecomunicaciones.Models
         public string tipoProblematica_ticket {get;set;}
         public string? descripcion_ticket {get;set;}
         public string status_ticket {get;set;}
+
+        [Column(TypeName = "timestamp with time zone")]
         public DateTime fecha_ticket {get;set;}
          
         [Column("id_cliente")]
