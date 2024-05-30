@@ -1,7 +1,13 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Controllers",
+    "\\Data",
+    "\\Models",
+    "\\Services",
+    "\\Views",
+    "\\Views\\Cliente"
   ],
-  "SelectedNode": "\\C:\\Users\\josue\\Desktop\\Desarrollo e Implementacion de Software\\DIS Segundo Intento",
+  "SelectedNode": "\\Views\\Cliente\\MisPlanes.cshtml",
   "PreviewInSolutionExplorer": false
 }

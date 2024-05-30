@@ -48,13 +48,13 @@ namespace JDTelecomunicaciones.Services
             Console.WriteLine("Se ejecuto generar recibo");
             DateTime fechaActual = DateTime.Today;
             //DateTime fechaActual = new DateTime(2023, 11, 1);
-            DateTime fechaGeneracionRecibo = new DateTime(fechaActual.Year, fechaActual.Month, 1);
-            DateTime fechaVencimiento = fechaGeneracionRecibo.AddMonths(1).AddDays(-1);
+            DateTime fechaGeneracionRecibo = new DateTime(fechaActual.Year, fechaActual.Month, 1).ToUniversalTime();
+            DateTime fechaVencimiento = fechaGeneracionRecibo.AddMonths(1).AddDays(-1).ToUniversalTime();
             string nombreMes = fechaActual.ToString("MMMM");
 
             Console.WriteLine("SE EJECUTÓ GENERAR RECIBO - Fecha actual: " + fechaActual + ", Fecha de generación de recibo: " + fechaGeneracionRecibo);
 
-            if (fechaActual == fechaGeneracionRecibo)
+            if (fechaActual != fechaGeneracionRecibo)
             {
                 using (var scope = _serviceProvider.CreateScope())
                 {

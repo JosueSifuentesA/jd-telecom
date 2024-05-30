@@ -2,12 +2,136 @@
     Layout = "~/Views/Shared/_LayoutAutentificacion.cshtml";
 }
 
-<h1>Login VIEW</h1>
+@section Styles{
+<style>
+    .formContainer {
+        display: flex;
+        flex-flow: column;
+        gap: 30px;
+        align-items: center;
+        border-radius: 0px 0px 10px 10px;
+        box-shadow: 1px 3px 4px gray;
+        padding: 15px;
+        background-color:white;
+    }
 
-<form asp-action="Login" asp-controller="Autentificacion" method="post">
-    <label>Usuario</label>
-    <input name="username"/>
-    <label>Contraseña</label>
-    <input name="password" type="password"/>
-    <button>Iniciar sesion</button>
-</form>
+    footer {
+        display: flex;
+        height: 66px;
+        padding: 12px 18px;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+        align-self: stretch;
+        background-color: #0061FF;
+        color: #0FF;
+        font-weight: 700;
+        font-size: 24px;
+    }
+
+    .formContainer input{
+
+        width:100%;
+        border-radius:10px;
+        border-color:dodgerblue;
+        padding:5px 10px;
+ 
+    }
+    .inputHandler{
+        display:flex;
+        flex-flow:column;
+        gap:10px;
+        width:100%;
+    }
+
+    .formContainer button {
+        border-radius: 20px;
+        color: white;
+        background-color: #0061FF;
+        border:none;
+        padding: 10px 20px;
+        width:max-content;
+    }
+
+    .iconHandler{
+        width:80px;
+        height:80px;
+        background-color:white;
+        border-radius:50%;
+        overflow:hidden;
+        padding: 10px;
+        box-shadow: 1px 4px 3px rgba(0,0,0,0.25);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+    }
+
+    .iconHandler img{
+        width:90%
+    }
+
+    .headerForm {
+        background-color: #0061FF;
+        height:200px;
+        display:flex;
+        flex-flow:column;
+        align-items:center;
+        justify-content:center;
+        padding:5px;
+        border-radius:10px 10px 0px 0px;
+    }
+
+    .FormCardContainer{
+        width:80%;
+        border-radius:10px;
+        margin:30px auto;
+        max-width:600px
+    }
+
+    h2 {
+        font-weight: bold;
+        color: #0061FF;
+    }
+
+    body {
+        background: url(../img/BackgroundJDTel.png);
+        background-size:cover;
+        background-color: hsl(208.85deg 86.53% 31.32%);
+        background-repeat: no-repeat;
+        height: 100vh;
+        display: flex;
+        flex-flow: column;
+        overflow: hidden;
+        justify-content: space-between;
+    }
+
+    .BrandLogo img {
+        width: 120px;
+    }
+
+    </style>
+
+
+
+
+}
+<section class="FormCardContainer">
+    <div class="headerForm">
+        <div class="iconHandler">
+            <img  src="~/img/logo-jd.png"/>
+        </div>
+    </div>
+
+    <form class="formContainer" asp-action="Login" asp-controller="Autentificacion" method="post">
+        <h2>Iniciar Session</h2>
+        <div class="inputHandler">
+            <input placeholder="Usuario" name="username" />
+            <input placeholder="Contraseña" name="password" type="password" />
+        </div>
+        <button>Acceder</button>
+        <span>Aun no tienes una cuenta? <a class="enlace" asp-controller="Autentificacion" asp-action="Registrarse">Registrarse</a></span>
+    </form>
+
+
+
+</section>
