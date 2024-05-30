@@ -107,7 +107,8 @@ namespace JDTelecomunicaciones.Services
                     idRecibo = 9999,
                     plan_recibo = "",
                     mes_recibo = "",
-                    fecha_vencimiento = "",
+                    //fecha_vencimiento = "",
+                    fecha_vencimiento = DateTime.Now,
                     monto_recibo = 0,
                 };
                 Console.WriteLine(e.Message);

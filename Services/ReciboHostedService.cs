@@ -76,7 +76,8 @@ namespace JDTelecomunicaciones.Services
                                 {
                                     plan_recibo = "JD_BASICO",
                                     mes_recibo = nombreMes,
-                                    fecha_vencimiento = fechaVencimiento.ToString("d/MM/yyyy"),
+                                    //fecha_vencimiento = fechaVencimiento.ToString("d/MM/yyyy"),
+                                    fecha_vencimiento = fechaVencimiento,
                                     monto_recibo = 30.00m,
                                     estado_recibo = "PENDIENTE",
                                     usuario = usuario

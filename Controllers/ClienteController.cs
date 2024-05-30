@@ -114,14 +114,22 @@ namespace JDTelecomunicaciones.Controllers
 
                 if(miPlan != null){
                     var myService = new Servicios(){
-                        FechaActivacion_Servicio= DateTime.Today.ToString("d/MM/yyyy"),
-                        PeriodoFacturacion_Servicio=DateTime.Today.AddMonths(1).ToString("d/MM/yyyy"),
-                        Estado_Servicio='A',
+                        //FechaActivacion_Servicio= DateTime.Today.ToString("d/MM/yyyy"),
+                        //PeriodoFacturacion_Servicio=DateTime.Today.AddMonths(1).ToString("d/MM/yyyy"),
+                        FechaActivacion_Servicio = DateTime.Now.ToUniversalTime(),
+                        PeriodoFacturacion_Servicio = DateTime.Now.AddMonths(1).ToUniversalTime(),
+                        //FechaActivacion_Servicio = DateTime.Now,
+                        //PeriodoFacturacion_Servicio = DateTime.Now.AddMonths(1),
+                        Estado_Servicio ='A',
                         Plan_Servicio= miPlan
 
                     };
+
+                    Console.WriteLine("FECHA ACTUAL!!!!" + DateTime.Now.ToUniversalTime());
+
                     var myNuevoUsuario = _usuarioService.FindUserById(idUser).Result;
                     
+
                     if(myNuevoUsuario != null){
                         try{
                             _servicioService.AddService(myService);
@@ -144,7 +152,9 @@ namespace JDTelecomunicaciones.Controllers
         [HttpPost("CambiarPlan")]
         public async Task<IActionResult> CambiarPlan([FromQuery] string planId){
             Console.WriteLine(planId);
-            try{
+            Console.WriteLine("FECHA ACTUAL!!!!" + DateTime.Now.ToUniversalTime());
+            try
+            {
                 int iPlanId = int.Parse(planId);
                 var idUserClaim =  User.FindFirst("idUser")?.Value;
                 int idUser = int.Parse(idUserClaim);
@@ -160,6 +170,7 @@ namespace JDTelecomunicaciones.Controllers
                 Console.WriteLine(e.Message);
                 return BadRequest(e);
             }
+
         }
 
         [Authorize(Roles ="C")]

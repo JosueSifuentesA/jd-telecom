@@ -16,7 +16,11 @@ namespace JDTelecomunicaciones.Models
         public int idRecibo {get;set;}
         public string plan_recibo {get;set;}
         public string mes_recibo {get;set;}
-        public string fecha_vencimiento {get;set;}
+        //public string fecha_vencimiento {get;set;}
+
+        [Column("fecha_vencimiento", TypeName = "timestamp with time zone")]
+        public DateTime fecha_vencimiento { get; set; }
+
         public decimal monto_recibo {get;set;}
         public string estado_recibo {get;set;}
         public Usuario usuario {get;set;}

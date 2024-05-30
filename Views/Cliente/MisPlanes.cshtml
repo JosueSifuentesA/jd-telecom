@@ -5,6 +5,14 @@
     var userService = Model.ModeloT;
     var planes = Model.ModelosS;
 
+    var PeriodoFacturacion_Servicio = userService.FechaActivacion_Servicio;
+    var FechaActivacion_Servicio = userService.PeriodoFacturacion_Servicio;
+
+
+    int diferenciaEnDias = (FechaActivacion_Servicio - PeriodoFacturacion_Servicio).Days;
+
+
+
 }
 
 @section Styles{
@@ -79,9 +87,9 @@
                         <strong>Expirado</strong>
                         }
                     </label>
-                    <span>¡Quedan 20 dias para que se genere un nuevo recibo!</span>
-                    <label>Servicio activo desde <storng>@userService.FechaActivacion_Servicio</storng></label>
-                    <label>Periodo de facturacion <storng>@userService.PeriodoFacturacion_Servicio</storng></label>
+                    <span>¡Quedan @diferenciaEnDias dias para que se genere un nuevo recibo!</span>
+                    <label>Servicio activo desde <storng>@userService.FechaActivacion_Servicio.ToString("dd/MM/yyyy")</storng></label>
+                    <label>Periodo de facturacion <storng>@userService.PeriodoFacturacion_Servicio.ToString("dd/MM/yyyy")</storng></label>
 
                     <div class="PlanCard scale-up-center">
                             <label hidden>@userService.Plan_Servicio.id</label>

@@ -16,8 +16,12 @@ namespace JDTelecomunicaciones.Models
         [Key]
         public int Id_servicios {get;set;}
 
-        public string FechaActivacion_Servicio {get;set;}
-        public string PeriodoFacturacion_Servicio {get;set;}
+        //public string FechaActivacion_Servicio {get;set;}
+        //public string PeriodoFacturacion_Servicio {get;set;}
+        [Column("FechaActivacion_Servicio", TypeName = "timestamp with time zone")]
+        public DateTime FechaActivacion_Servicio {get;set;}
+        [Column("PeriodoFacturacion_Servicio", TypeName = "timestamp with time zone")]
+        public DateTime PeriodoFacturacion_Servicio {get;set;}
 
         public char Estado_Servicio {get;set;}
 
